@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { Heart, Minus, Plus, Trash2 } from "lucide-react";
+import { PRODUCT_LOOKUP, getProductCartMeta, parseProductMetric } from "../data/products";
 
 const CART_ITEMS_KEY = "jewelcasa-cart-items";
 const FAVORITES_KEY = "jewelcasa-favorites";
@@ -35,152 +36,6 @@ const getStoredCartEntries = () => {
   }
 };
 
-const PRODUCT_LOOKUP: Record<string, {
-  id: string;
-  code: string;
-  name: string;
-  image: string;
-  readyState: string;
-  category: string;
-  color: string;
-  estimateDelivery: string;
-  netWeight: string;
-  purity: string;
-  wastage: string;
-  laborCharges: string;
-  totalNetWt: string;
-  fineWeight: string;
-}> = {
-  "JW-0041": {
-    id: "JW-0041",
-    code: "JW-0041",
-    name: "Lumière Solitaire",
-    image: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=600&h=700&fit=crop&auto=format",
-    readyState: "Ready Stock",
-    category: "22KT Ready",
-    color: "White Gold",
-    estimateDelivery: "16/08/2026",
-    netWeight: "3.79 gm",
-    purity: "18KT",
-    wastage: "4.5%",
-    laborCharges: "Not Applicable",
-    totalNetWt: "3.79 gm",
-    fineWeight: "3.61 gm",
-  },
-  "JW-0028": {
-    id: "JW-0028",
-    code: "JW-0028",
-    name: "Verdure Cocktail Ring",
-    image: "https://images.unsplash.com/photo-1592317295760-5c1f677dfc78?w=600&h=700&fit=crop&auto=format",
-    readyState: "Ready Stock",
-    category: "22KT Ready",
-    color: "Yellow Gold",
-    estimateDelivery: "20/08/2026",
-    netWeight: "4.15 gm",
-    purity: "18KT",
-    wastage: "3.5%",
-    laborCharges: "Not Applicable",
-    totalNetWt: "4.15 gm",
-    fineWeight: "3.94 gm",
-  },
-  "JW-0033": {
-    id: "JW-0033",
-    code: "JW-0033",
-    name: "Nocturne Band",
-    image: "https://images.unsplash.com/photo-1713950920412-97799efdf870?w=600&h=700&fit=crop&auto=format",
-    readyState: "Ready Stock",
-    category: "18KT Ready",
-    color: "Black Gold",
-    estimateDelivery: "17/08/2026",
-    netWeight: "2.85 gm",
-    purity: "18KT",
-    wastage: "3.8%",
-    laborCharges: "Not Applicable",
-    totalNetWt: "2.85 gm",
-    fineWeight: "2.71 gm",
-  },
-  "JW-0017": {
-    id: "JW-0017",
-    code: "JW-0017",
-    name: "Trèfle Ring",
-    image: "https://images.unsplash.com/photo-1705326455036-0fab8ecba04d?w=600&h=700&fit=crop&auto=format",
-    readyState: "Ready Stock",
-    category: "18KT Ready",
-    color: "Yellow Gold",
-    estimateDelivery: "18/08/2026",
-    netWeight: "3.25 gm",
-    purity: "22KT",
-    wastage: "4.2%",
-    laborCharges: "Not Applicable",
-    totalNetWt: "3.25 gm",
-    fineWeight: "3.12 gm",
-  },
-  "JW-0055": {
-    id: "JW-0055",
-    code: "JW-0055",
-    name: "Arc Pearl Strand",
-    image: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=600&h=700&fit=crop&auto=format",
-    readyState: "Ready Stock",
-    category: "Silver Ready",
-    color: "Pearl White",
-    estimateDelivery: "18/08/2026",
-    netWeight: "17.5 gm",
-    purity: "Silver",
-    wastage: "4.2%",
-    laborCharges: "Not Applicable",
-    totalNetWt: "17.5 gm",
-    fineWeight: "16.62 gm",
-  },
-  "JW-0062": {
-    id: "JW-0062",
-    code: "JW-0062",
-    name: "Rivière Necklace",
-    image: "https://images.unsplash.com/photo-1631832722475-dd2ecfc47257?w=600&h=700&fit=crop&auto=format",
-    readyState: "Ready Stock",
-    category: "Chain",
-    color: "White Gold",
-    estimateDelivery: "19/08/2026",
-    netWeight: "12.40 gm",
-    purity: "18KT",
-    wastage: "3.5%",
-    laborCharges: "Not Applicable",
-    totalNetWt: "12.40 gm",
-    fineWeight: "11.78 gm",
-  },
-  "JW-0044": {
-    id: "JW-0044",
-    code: "JW-0044",
-    name: "Nacre Statement",
-    image: "https://images.unsplash.com/photo-1595345705177-ffe090eb0784?w=600&h=700&fit=crop&auto=format",
-    readyState: "Ready Stock",
-    category: "Mangalsutra",
-    color: "Yellow Gold",
-    estimateDelivery: "21/08/2026",
-    netWeight: "8.50 gm",
-    purity: "18KT",
-    wastage: "3.8%",
-    laborCharges: "Not Applicable",
-    totalNetWt: "8.50 gm",
-    fineWeight: "8.08 gm",
-  },
-  "JW-0039": {
-    id: "JW-0039",
-    code: "JW-0039",
-    name: "Aube Pendant",
-    image: "https://images.unsplash.com/photo-1561812350-932aed735105?w=600&h=700&fit=crop&auto=format",
-    readyState: "Ready Stock",
-    category: "Bracelet",
-    color: "Rose Gold",
-    estimateDelivery: "19/08/2026",
-    netWeight: "5.75 gm",
-    purity: "18KT",
-    wastage: "4.0%",
-    laborCharges: "Not Applicable",
-    totalNetWt: "5.75 gm",
-    fineWeight: "5.47 gm",
-  },
-};
-
 const getStoredIds = (key: string) => {
   if (typeof window === "undefined") return [] as string[];
 
@@ -193,8 +48,6 @@ const getStoredIds = (key: string) => {
   }
 };
 
-const parseWeightValue = (value: string) => Number.parseFloat(value.replace(/[^0-9.]/g, "")) || 0;
-
 export function Cart() {
   const [cartItems, setCartItems] = useState<CartEntry[]>([]);
 
@@ -205,13 +58,17 @@ export function Cart() {
   const items = useMemo(
     () =>
       cartItems
-        .map((entry) => PRODUCT_LOOKUP[entry.id] ? { ...PRODUCT_LOOKUP[entry.id], quantity: entry.quantity } : null)
-        .filter((item): item is (typeof PRODUCT_LOOKUP)[keyof typeof PRODUCT_LOOKUP] & { quantity: number } => Boolean(item)),
+        .map((entry) => {
+          const product = PRODUCT_LOOKUP[entry.id];
+          if (!product) return null;
+          return { ...product, ...getProductCartMeta(product, entry.quantity), quantity: entry.quantity };
+        })
+        .filter((item): item is (typeof PRODUCT_LOOKUP)[keyof typeof PRODUCT_LOOKUP] & { quantity: number; code: string; estimateDelivery: string; laborCharges: string; fineWeight: string } => Boolean(item)),
     [cartItems]
   );
 
-  const totalNetWeight = items.reduce((sum, item) => sum + parseWeightValue(item.netWeight) * item.quantity, 0);
-  const totalFineWeight = items.reduce((sum, item) => sum + parseWeightValue(item.fineWeight) * item.quantity, 0);
+  const totalNetWeight = items.reduce((sum, item) => sum + parseProductMetric(item.netWeight) * item.quantity, 0);
+  const totalFineWeight = items.reduce((sum, item) => sum + parseProductMetric(item.fineWeight) * item.quantity, 0);
 
   const updateCartItems = (next: CartEntry[]) => {
     const totalCount = next.reduce((sum, entry) => sum + entry.quantity, 0);
@@ -315,10 +172,10 @@ export function Cart() {
                   </div>
 
                   <div className="w-[9%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">
-                    {(parseWeightValue(item.netWeight) * item.quantity).toFixed(2)} gm
+                    {(parseProductMetric(item.netWeight) * item.quantity).toFixed(2)} gm
                   </div>
                   <div className="w-[9%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">
-                    {(parseWeightValue(item.fineWeight) * item.quantity).toFixed(2)} gm
+                    {(parseProductMetric(item.fineWeight) * item.quantity).toFixed(2)} gm
                   </div>
                   <div className="w-[9%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">-</div>
                   <div className="w-[10%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">

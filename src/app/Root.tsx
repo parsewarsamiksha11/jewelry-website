@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Outlet, NavLink, Link, useLocation, useNavigate } from "react-router";
 import { Menu, X, Heart, ShoppingBag, Search } from "lucide-react";
+import { SEARCH_PRODUCTS } from "./data/products";
 
 const CART_COUNT_KEY = "jewelcasa-cart-count";
 const CART_ITEMS_KEY = "jewelcasa-cart-items";
@@ -68,17 +69,6 @@ const FOOTER_COLS = [
       { label: "Wishlist", to: "/wishlist" },
     ],
   },
-];
-
-const SEARCH_PRODUCTS = [
-  { label: "Lumière Solitaire", id: "JW-0041" },
-  { label: "Verdure Cocktail Ring", id: "JW-0028" },
-  { label: "Nocturne Band", id: "JW-0033" },
-  { label: "Trèfle Ring", id: "JW-0017" },
-  { label: "Arc Pearl Strand", id: "JW-0055" },
-  { label: "Rivière Necklace", id: "JW-0062" },
-  { label: "Nacre Statement", id: "JW-0044" },
-  { label: "Aube Pendant", id: "JW-0039" },
 ];
 
 const SEARCH_SUGGESTIONS = SEARCH_PRODUCTS.map((product) => product.label);

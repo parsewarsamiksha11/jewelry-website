@@ -1,99 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
 import { SlidersHorizontal, X, Heart } from "lucide-react";
+import { PRODUCT_CATALOG, PRODUCT_CATEGORIES } from "../data/products";
+import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
-const CATEGORIES = [
-  "All",
-  "22KT Ready",
-  "18KT Ready",
-  "Chain",
-  "Mangalsutra",
-  "Bracelet",
-  "Silver Ready",
-];
-
-const ALL_PIECES = [
-  {
-    id: "JW-0041",
-    name: "Lumière Solitaire",
-    category: "22KT Ready",
-    material: "18k White Gold · 1.2ct Diamond",
-    price: "₹ 8,40,000",
-    image: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=600&h=700&fit=crop&auto=format",
-    alt: "Diamond solitaire ring on white surface",
-    tag: "New",
-  },
-  {
-    id: "JW-0028",
-    name: "Verdure Cocktail Ring",
-    category: "22KT Ready",
-    material: "18k Yellow Gold · Emerald",
-    price: "₹ 5,90,000",
-    image: "https://images.unsplash.com/photo-1592317295760-5c1f677dfc78?w=600&h=700&fit=crop&auto=format",
-    alt: "Gold ring with emerald gemstone",
-    tag: "Rare",
-  },
-  {
-    id: "JW-0033",
-    name: "Nocturne Band",
-    category: "18KT Ready",
-    material: "18k Black Gold · Pavé",
-    price: "₹ 3,20,000",
-    image: "https://images.unsplash.com/photo-1713950920412-97799efdf870?w=600&h=700&fit=crop&auto=format",
-    alt: "Ring on dark surface",
-    tag: null,
-  },
-  {
-    id: "JW-0017",
-    name: "Trèfle Ring",
-    category: "18KT Ready",
-    material: "22k Yellow Gold · Clover Motif",
-    price: "₹ 2,80,000",
-    image: "https://images.unsplash.com/photo-1705326455036-0fab8ecba04d?w=600&h=700&fit=crop&auto=format",
-    alt: "Gold ring on white surface",
-    tag: null,
-  },
-  {
-    id: "JW-0055",
-    name: "Arc Pearl Strand",
-    category: "Silver Ready",
-    material: "Akoya Pearls · 14k Clasp",
-    price: "₹ 4,10,000",
-    image: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=600&h=700&fit=crop&auto=format",
-    alt: "Pearl necklace strand close up",
-    tag: "Signature",
-  },
-  {
-    id: "JW-0062",
-    name: "Rivière Necklace",
-    category: "Chain",
-    material: "18k White Gold · Diamond Line",
-    price: "₹ 12,60,000",
-    image: "https://images.unsplash.com/photo-1631832722475-dd2ecfc47257?w=600&h=700&fit=crop&auto=format",
-    alt: "Diamond line necklace on black background",
-    tag: "New",
-  },
-  {
-    id: "JW-0044",
-    name: "Nacre Statement",
-    category: "Mangalsutra",
-    material: "South Sea Pearl · 18k Setting",
-    price: "₹ 6,80,000",
-    image: "https://images.unsplash.com/photo-1595345705177-ffe090eb0784?w=600&h=700&fit=crop&auto=format",
-    alt: "Pearl necklace on grey textile",
-    tag: null,
-  },
-  {
-    id: "JW-0039",
-    name: "Aube Pendant",
-    category: "Bracelet",
-    material: "18k Rose Gold · Sapphire Drop",
-    price: "₹ 3,75,000",
-    image: "https://images.unsplash.com/photo-1561812350-932aed735105?w=600&h=700&fit=crop&auto=format",
-    alt: "Gold and blue sapphire ring",
-    tag: null,
-  },
-];
+const CATEGORIES = PRODUCT_CATEGORIES;
+const ALL_PIECES = PRODUCT_CATALOG;
 
 const SORT_OPTIONS = ["Featured", "Price: Low to High", "Price: High to Low", "Newest"];
 
@@ -344,12 +256,15 @@ export function Collections() {
 
         {/* Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-          {sorted.map((piece) => (
+          {sorted.map((piece) => {
+            const primaryImage = piece.images?.[0] ?? { src: "", alt: `${piece.name} product image` };
+
+            return (
             <Link to={`/collections/${piece.id}`} key={piece.id} className="group cursor-pointer">
               <div className="relative overflow-hidden bg-muted aspect-[3/4]">
-                <img
-                  src={piece.image}
-                  alt={piece.alt}
+                <ImageWithFallback
+                  src={primaryImage.src || "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&h=1400&fit=crop&auto=format"}
+                  alt={primaryImage.alt || piece.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 {piece.tag && (
@@ -390,7 +305,8 @@ export function Collections() {
                 <p className="text-sm tracking-wider text-foreground">{piece.price}</p>
               </div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

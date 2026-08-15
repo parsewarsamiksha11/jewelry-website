@@ -1,67 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight, ShoppingBag, Trash2 } from "lucide-react";
+import { PRODUCT_LOOKUP, getWishlistProductMeta } from "../data/products";
 
 const FAVORITES_KEY = "jewelcasa-favorites";
 const CART_ITEMS_KEY = "jewelcasa-cart-items";
-
-const PRODUCT_LOOKUP: Record<string, {
-  id: string;
-  name: string;
-  image: string;
-  netWeight: string;
-  purity: string;
-  wastage: string;
-  laborCharges: string;
-  fineWeight: string;
-  expectedDelivery: string;
-}> = {
-  "JW-0041": {
-    id: "JW-0041",
-    name: "CZ GENTS RING (92+4.5)",
-    image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600&h=700&fit=crop&auto=format",
-    netWeight: "15.18 gm",
-    purity: "92%",
-    wastage: "4.5%",
-    laborCharges: "₹ Per Kg",
-    fineWeight: "5.00gm",
-    expectedDelivery: "17/08/2026",
-  },
-  "JW-0028": {
-    id: "JW-0028",
-    name: "Verdure Cocktail Ring",
-    image: "https://images.unsplash.com/photo-1592317295760-5c1f677dfc78?w=600&h=700&fit=crop&auto=format",
-    netWeight: "14.10 gm",
-    purity: "91.6%",
-    wastage: "3.5%",
-    laborCharges: "₹ 7,200 / Kg",
-    fineWeight: "4.90gm",
-    expectedDelivery: "20/08/2026",
-  },
-  "JW-0033": {
-    id: "JW-0033",
-    name: "Nocturne Band",
-    image: "https://images.unsplash.com/photo-1713950920412-97799efdf870?w=600&h=700&fit=crop&auto=format",
-    netWeight: "12.40 gm",
-    purity: "92%",
-    wastage: "4.2%",
-    laborCharges: "₹ 6,800 / Kg",
-    fineWeight: "4.20gm",
-    expectedDelivery: "18/08/2026",
-  },
-  "JW-0055": {
-    id: "JW-0055",
-    name: "Arc Pearl Strand",
-    image: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=600&h=700&fit=crop&auto=format",
-    netWeight: "17.50 gm",
-    purity: "92%",
-    wastage: "4.2%",
-    laborCharges: "₹ 8,300 / Kg",
-    fineWeight: "5.80gm",
-    expectedDelivery: "18/08/2026",
-  },
-};
-
 const getStoredIds = (key: string) => {
   if (typeof window === "undefined") return [] as string[];
 
@@ -84,8 +27,11 @@ export function Wishlist() {
   const items = useMemo(
     () =>
       favoriteIds
-        .map((id) => PRODUCT_LOOKUP[id])
-        .filter((item): item is (typeof PRODUCT_LOOKUP)[keyof typeof PRODUCT_LOOKUP] => Boolean(item)),
+        .map((id) => {
+          const product = PRODUCT_LOOKUP[id];
+          return product ? { ...product, ...getWishlistProductMeta(product) } : null;
+        })
+        .filter((item): item is (typeof PRODUCT_LOOKUP)[keyof typeof PRODUCT_LOOKUP] & { netWeight: string; purity: string; wastage: string; laborCharges: string; fineWeight: string; expectedDelivery: string } => Boolean(item)),
     [favoriteIds]
   );
 
