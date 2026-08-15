@@ -18,10 +18,8 @@ const FALLBACK_PRODUCT = {
   description: "This product is not available. Please visit our collections for more options.",
   availability: "Not Available",
   netWeight: "N/A",
-  wastage: "N/A",
   size: "N/A",
   color: "N/A",
-  subCategory: "N/A",
   expectedDelivery: "N/A",
   exchangeEligibility: "N/A",
   details: [],
@@ -301,10 +299,6 @@ export function ProductDetail() {
               <span className="text-right">{product.netWeight}</span>
             </div>
             <div className="flex items-center justify-between gap-4 py-1">
-              <span className="font-medium">Wastage:</span>
-              <span className="text-right">{product.wastage}</span>
-            </div>
-            <div className="flex items-center justify-between gap-4 py-1">
               <span className="font-medium">Size:</span>
               <span className="text-right">{product.size || "—"}</span>
             </div>
@@ -315,10 +309,6 @@ export function ProductDetail() {
             <div className="flex items-center justify-between gap-4 py-1">
               <span className="font-medium">Category:</span>
               <span className="text-right uppercase">{product.category}</span>
-            </div>
-            <div className="flex items-center justify-between gap-4 py-1">
-              <span className="font-medium">Sub Category:</span>
-              <span className="text-right uppercase">{product.subCategory}</span>
             </div>
             <div className="flex items-center justify-between gap-4 py-1">
               <span className="font-medium">Expected Delivery Date:</span>

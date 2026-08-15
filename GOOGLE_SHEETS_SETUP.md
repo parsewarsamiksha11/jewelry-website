@@ -18,7 +18,7 @@ This guide explains how to connect your jewelry product catalog to a Google Shee
 3. Add these column headers in row 1:
 
 ```
-id | name | category | sku | vendor | purity | price | material | tag | description | availability | netWeight | wastage | size | color | subCategory | expectedDelivery | exchangeEligibility | image1 | image2 | image3 | relatedId1 | relatedName1 | relatedPrice1 | relatedImage1
+id | name | category | sku | vendor | purity | price | material | tag | description | availability | netWeight | size | color | expectedDelivery | exchangeEligibility | image1 | image2 | image3 | relatedId1 | relatedName1 | relatedPrice1 | relatedImage1
 ```
 
 ### Step 2: Add Your Products
@@ -81,10 +81,8 @@ The app will:
 | description | Text | An elegant solitaire... | Product description |
 | availability | Text | Ready Stock | Availability status |
 | netWeight | Text | 3.79 gm | Must include "gm" unit |
-| wastage | Text | 4.5 % | Must include % unit |
 | size | Text | 7 or 45 cm | Product size |
 | color | Text | White Gold | Color/finish |
-| subCategory | Text | DIAMOND | Sub-category |
 | expectedDelivery | Text | 16/08/2026 | Expected delivery date |
 | exchangeEligibility | Text | Yes or No | Exchange eligibility |
 | image1, image2, image3 | URL | https://... | Product images (HTTPS URLs) |

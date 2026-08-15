@@ -31,7 +31,7 @@ export function Wishlist() {
           const product = PRODUCT_LOOKUP[id];
           return product ? { ...product, ...getWishlistProductMeta(product) } : null;
         })
-        .filter((item): item is (typeof PRODUCT_LOOKUP)[keyof typeof PRODUCT_LOOKUP] & { netWeight: string; purity: string; wastage: string; laborCharges: string; fineWeight: string; expectedDelivery: string } => Boolean(item)),
+        .filter((item): item is (typeof PRODUCT_LOOKUP)[keyof typeof PRODUCT_LOOKUP] & { netWeight: string; purity: string; laborCharges: string; fineWeight: string; expectedDelivery: string } => Boolean(item)),
     [favoriteIds]
   );
 
@@ -90,7 +90,6 @@ export function Wishlist() {
                           <div className="space-y-2 text-[15px] text-[#2b2926]">
                             <p><span className="font-semibold">Net Weight</span> : {item.netWeight}</p>
                             <p><span className="font-semibold">Purity</span> : {item.purity}</p>
-                            <p><span className="font-semibold">Wastage</span> : {item.wastage}</p>
                             <p><span className="font-semibold">Labour Charges</span> : {item.laborCharges}</p>
                             <p><span className="font-semibold">Fine Weight</span> : {item.fineWeight}</p>
                             <p><span className="font-semibold">Estimate Delivery</span> : {item.expectedDelivery}</p>

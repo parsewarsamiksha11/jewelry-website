@@ -239,15 +239,6 @@ export function Root() {
             </nav>
 
             <div className="hidden md:flex items-center gap-3 ml-6">
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 rounded-full border border-[#d7c5ae] bg-[#f3ece2] px-3 py-2 text-[10px] tracking-[0.18em] uppercase text-[#5a4130]"
-                style={{ fontFamily: "'DM Mono', monospace" }}
-              >
-                <span>Wastage:</span>
-                <span className="inline-flex items-center justify-center rounded-full bg-[#c98b52] px-2 py-0.5 text-white text-[9px]">ON</span>
-              </button>
-
               <Link
                 to="/wishlist"
                 aria-label="Favorites"

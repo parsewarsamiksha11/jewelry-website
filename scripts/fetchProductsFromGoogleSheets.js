@@ -77,11 +77,9 @@ function parseCSV(csv) {
       description: row.description,
       availability: row.availability,
       netWeight: row.netWeight,
-      wastage: row.wastage,
       size: row.size,
       color: row.color,
       category: row.category,
-      subCategory: row.subCategory,
       expectedDelivery: row.expectedDelivery,
       exchangeEligibility: row.exchangeEligibility,
       details: generateDetails(row),
@@ -120,11 +118,9 @@ function generateDetails(row) {
   return [
     { label: 'Availability', value: row.availability },
     { label: 'Net Weight', value: row.netWeight },
-    { label: 'Wastage', value: row.wastage },
     { label: 'Size', value: row.size },
     { label: 'Color', value: row.color },
     { label: 'Category', value: row.category },
-    { label: 'Sub Category', value: row.subCategory },
     { label: 'Expected Delivery Date', value: row.expectedDelivery },
     { label: 'Exchange Eligibility', value: row.exchangeEligibility },
   ];
@@ -144,10 +140,8 @@ function generateProductsFile(products) {
   description: string;
   availability: string;
   netWeight: string;
-  wastage: string;
   size: string;
   color: string;
-  subCategory: string;
   expectedDelivery: string;
   exchangeEligibility: string;
   details: { label: string; value: string }[];
@@ -189,7 +183,6 @@ export const getWishlistProductMeta = (product: Product) => {
     image: product.images[0]?.src ?? "",
     netWeight: product.netWeight,
     purity: product.purity,
-    wastage: product.wastage,
     laborCharges: "Not Applicable",
     fineWeight: \`\${fineWeight.toFixed(2)} gm\`,
     expectedDelivery: product.expectedDelivery,

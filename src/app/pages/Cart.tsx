@@ -113,7 +113,6 @@ export function Cart() {
               <div className="w-[24%] px-4 py-3 text-center text-[15px] font-medium text-[#2c2926]">Product</div>
               <div className="w-[8%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Net Wt.</div>
               <div className="w-[8%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Purity</div>
-              <div className="w-[9%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Wastage</div>
               <div className="w-[12%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Labour Charges</div>
               <div className="w-[12%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Quantity</div>
               <div className="w-[9%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Total Net Wt.</div>
@@ -149,7 +148,6 @@ export function Cart() {
 
                   <div className="w-[8%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">{item.netWeight}</div>
                   <div className="w-[8%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">{item.purity}</div>
-                  <div className="w-[9%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">{item.wastage}</div>
                   <div className="w-[12%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">{item.laborCharges}</div>
 
                   <div className="w-[12%] px-2 py-4 flex items-center justify-center gap-2 text-[15px] text-[#2d2a27]">
