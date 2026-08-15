@@ -80,7 +80,7 @@ function parseCSV(csv) {
       size: row.size,
       color: row.color,
       category: row.category,
-      expectedDelivery: row.expectedDelivery,
+      expectedDelivery: '',
       exchangeEligibility: row.exchangeEligibility,
       details: generateDetails(row),
       images: images.length > 0 ? images : [{ src: '', alt: row.name }],
@@ -121,7 +121,6 @@ function generateDetails(row) {
     { label: 'Size', value: row.size },
     { label: 'Color', value: row.color },
     { label: 'Category', value: row.category },
-    { label: 'Expected Delivery Date', value: row.expectedDelivery },
     { label: 'Exchange Eligibility', value: row.exchangeEligibility },
   ];
 }
@@ -155,6 +154,12 @@ export const PRODUCT_LOOKUP = PRODUCTS;
 
 export const parseProductMetric = (value: string) => Number.parseFloat(value.replace(/[^0-9.]/g, "")) || 0;
 
+export const getExpectedDeliveryDate = () => {
+  const today = new Date();
+  const deliveryDate = new Date(today.getTime() + 5 * 24 * 60 * 60 * 1000);
+  return deliveryDate.toLocaleDateString('en-GB');
+};
+
 export const getProductCartMeta = (product: Product, quantity = 1) => {
   const netWeight = parseProductMetric(product.netWeight);
   const purityValue = product.purity.toLowerCase().includes("silver") ? 0.92 : 0.9;
@@ -164,7 +169,7 @@ export const getProductCartMeta = (product: Product, quantity = 1) => {
     code: product.id,
     image: product.images[0]?.src ?? "",
     readyState: product.availability,
-    estimateDelivery: product.expectedDelivery,
+    estimateDelivery: getExpectedDeliveryDate(),
     laborCharges: "Not Applicable",
     fineWeight: \`\${fineWeight.toFixed(2)} gm\`,
     totalNetWt: \`\${(netWeight * quantity).toFixed(2)} gm\`,
@@ -185,7 +190,7 @@ export const getWishlistProductMeta = (product: Product) => {
     purity: product.purity,
     laborCharges: "Not Applicable",
     fineWeight: \`\${fineWeight.toFixed(2)} gm\`,
-    expectedDelivery: product.expectedDelivery,
+    expectedDelivery: getExpectedDeliveryDate(),
   };
 };
 

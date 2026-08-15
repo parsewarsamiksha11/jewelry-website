@@ -37,7 +37,7 @@ export const PRODUCTS: Record<string, Product> = {
     netWeight: "3.79 gm",
     size: "7",
     color: "White Gold",
-    expectedDelivery: "16/08/2026",
+    expectedDelivery: "",
     exchangeEligibility: "Yes",
     details: [
       { label: "Availability", value: "Ready Stock" },
@@ -45,7 +45,6 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Size", value: "7" },
       { label: "Color", value: "White Gold" },
       { label: "Category", value: "22KT Ready" },
-      { label: "Expected Delivery Date", value: "16/08/2026" },
       { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
@@ -83,7 +82,7 @@ export const PRODUCTS: Record<string, Product> = {
     netWeight: "4.15 gm",
     size: "7",
     color: "Yellow Gold",
-    expectedDelivery: "20/08/2026",
+    expectedDelivery: "",
     exchangeEligibility: "Yes",
     details: [
       { label: "Availability", value: "Ready Stock" },
@@ -91,7 +90,6 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Size", value: "7" },
       { label: "Color", value: "Yellow Gold" },
       { label: "Category", value: "22KT Ready" },
-      { label: "Expected Delivery Date", value: "20/08/2026" },
       { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
@@ -125,7 +123,7 @@ export const PRODUCTS: Record<string, Product> = {
     netWeight: "2.85 gm",
     size: "7",
     color: "Black Gold",
-    expectedDelivery: "17/08/2026",
+    expectedDelivery: "",
     exchangeEligibility: "Yes",
     details: [
       { label: "Availability", value: "Ready Stock" },
@@ -133,7 +131,6 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Size", value: "7" },
       { label: "Color", value: "Black Gold" },
       { label: "Category", value: "18KT Ready" },
-      { label: "Expected Delivery Date", value: "17/08/2026" },
       { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
@@ -161,7 +158,7 @@ export const PRODUCTS: Record<string, Product> = {
     netWeight: "3.25 gm",
     size: "6.5",
     color: "Yellow Gold",
-    expectedDelivery: "18/08/2026",
+    expectedDelivery: "",
     exchangeEligibility: "Yes",
     details: [
       { label: "Availability", value: "Ready Stock" },
@@ -169,7 +166,6 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Size", value: "6.5" },
       { label: "Color", value: "Yellow Gold" },
       { label: "Category", value: "18KT Ready" },
-      { label: "Expected Delivery Date", value: "18/08/2026" },
       { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
@@ -197,7 +193,7 @@ export const PRODUCTS: Record<string, Product> = {
     netWeight: "17.5 gm",
     size: "45 cm",
     color: "Pearl White",
-    expectedDelivery: "18/08/2026",
+    expectedDelivery: "",
     exchangeEligibility: "Yes",
     details: [
       { label: "Availability", value: "Ready Stock" },
@@ -205,7 +201,6 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Size", value: "45 cm" },
       { label: "Color", value: "Pearl White" },
       { label: "Category", value: "Silver Ready" },
-      { label: "Expected Delivery Date", value: "18/08/2026" },
       { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
@@ -233,7 +228,7 @@ export const PRODUCTS: Record<string, Product> = {
     netWeight: "12.40 gm",
     size: "42 cm",
     color: "White Gold",
-    expectedDelivery: "19/08/2026",
+    expectedDelivery: "",
     exchangeEligibility: "Yes",
     details: [
       { label: "Availability", value: "Ready Stock" },
@@ -241,7 +236,6 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Size", value: "42 cm" },
       { label: "Color", value: "White Gold" },
       { label: "Category", value: "Chain" },
-      { label: "Expected Delivery Date", value: "19/08/2026" },
       { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
@@ -269,7 +263,7 @@ export const PRODUCTS: Record<string, Product> = {
     netWeight: "8.50 gm",
     size: "48 cm",
     color: "Yellow Gold",
-    expectedDelivery: "21/08/2026",
+    expectedDelivery: "",
     exchangeEligibility: "Yes",
     details: [
       { label: "Availability", value: "Ready Stock" },
@@ -277,7 +271,6 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Size", value: "48 cm" },
       { label: "Color", value: "Yellow Gold" },
       { label: "Category", value: "Mangalsutra" },
-      { label: "Expected Delivery Date", value: "21/08/2026" },
       { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
@@ -305,7 +298,7 @@ export const PRODUCTS: Record<string, Product> = {
     netWeight: "5.75 gm",
     size: "7.5 cm",
     color: "Rose Gold",
-    expectedDelivery: "19/08/2026",
+    expectedDelivery: "",
     exchangeEligibility: "Yes",
     details: [
       { label: "Availability", value: "Ready Stock" },
@@ -313,7 +306,6 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Size", value: "7.5 cm" },
       { label: "Color", value: "Rose Gold" },
       { label: "Category", value: "Bracelet" },
-      { label: "Expected Delivery Date", value: "19/08/2026" },
       { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
@@ -331,6 +323,12 @@ export const PRODUCT_LOOKUP = PRODUCTS;
 
 export const parseProductMetric = (value: string) => Number.parseFloat(value.replace(/[^0-9.]/g, "")) || 0;
 
+export const getExpectedDeliveryDate = () => {
+  const today = new Date();
+  const deliveryDate = new Date(today.getTime() + 5 * 24 * 60 * 60 * 1000);
+  return deliveryDate.toLocaleDateString('en-GB');
+};
+
 export const getProductCartMeta = (product: Product, quantity = 1) => {
   const netWeight = parseProductMetric(product.netWeight);
   const purityValue = product.purity.toLowerCase().includes("silver") ? 0.92 : 0.9;
@@ -340,7 +338,7 @@ export const getProductCartMeta = (product: Product, quantity = 1) => {
     code: product.id,
     image: product.images[0]?.src ?? "",
     readyState: product.availability,
-    estimateDelivery: product.expectedDelivery,
+    estimateDelivery: getExpectedDeliveryDate(),
     laborCharges: "Not Applicable",
     fineWeight: `${fineWeight.toFixed(2)} gm`,
     totalNetWt: `${(netWeight * quantity).toFixed(2)} gm`,
@@ -361,7 +359,7 @@ export const getWishlistProductMeta = (product: Product) => {
     purity: product.purity,
     laborCharges: "Not Applicable",
     fineWeight: `${fineWeight.toFixed(2)} gm`,
-    expectedDelivery: product.expectedDelivery,
+    expectedDelivery: getExpectedDeliveryDate(),
   };
 };
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { ArrowLeft, ArrowRight, ChevronDown, ChevronUp, Heart, Share2 } from "lucide-react";
-import { PRODUCTS as PRODUCT_DATA } from "../data/products";
+import { PRODUCTS as PRODUCT_DATA, getExpectedDeliveryDate } from "../data/products";
 
 const PRODUCTS = PRODUCT_DATA;
 
@@ -312,7 +312,7 @@ export function ProductDetail() {
             </div>
             <div className="flex items-center justify-between gap-4 py-1">
               <span className="font-medium">Expected Delivery Date:</span>
-              <span className="text-right">{product.expectedDelivery}</span>
+              <span className="text-right">{getExpectedDeliveryDate()}</span>
             </div>
             <div className="flex items-center justify-between gap-4 py-1">
               <span className="font-medium">Exchange Eligibility:</span>
