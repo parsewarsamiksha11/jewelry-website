@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "fetch-products": "node scripts/fetchProductsFromGoogleSheets.js",
+    "build": "npm run fetch-products && vite build",
     "dev": "vite"
   },
   "dependencies": {

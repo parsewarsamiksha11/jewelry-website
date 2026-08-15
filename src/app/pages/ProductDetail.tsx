@@ -201,7 +201,7 @@ export function ProductDetail() {
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-3 left-4 text-[#b38d5d] text-[11px] tracking-[0.3em] uppercase italic bg-white/20 px-2 py-1">
-              JEWEL CASA
+              Velore
             </div>
             {product.tag && (
               <span className="absolute top-4 left-4 bg-[#c29c67] text-white text-[9px] tracking-[0.2em] uppercase px-2 py-1">
