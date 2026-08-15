@@ -32,6 +32,16 @@ async function fetchAndParseCSV() {
   }
 }
 
+function formatPrice(price) {
+  if (!price) return '₹ 0';
+  const priceStr = String(price).trim();
+  // Add rupee symbol if not already present
+  if (!priceStr.includes('₹')) {
+    return `₹ ${priceStr}`;
+  }
+  return priceStr;
+}
+
 function parseCSV(csv) {
   const lines = csv.trim().split('\n');
   const headers = lines[0].split(',').map(h => h.trim());
@@ -58,7 +68,7 @@ function parseCSV(csv) {
       related.push({
         id: row.relatedId1,
         name: row.relatedName1,
-        price: row.relatedPrice1 || '₹ 0',
+        price: formatPrice(row.relatedPrice1),
         image: row.relatedImage1 || '',
         alt: `${row.relatedName1} thumbnail`,
       });
@@ -71,7 +81,7 @@ function parseCSV(csv) {
       sku: row.sku,
       vendor: row.vendor,
       purity: row.purity,
-      price: row.price,
+      price: formatPrice(row.price),
       material: row.material,
       tag: row.tag === 'null' || !row.tag ? null : row.tag,
       description: row.description,

@@ -329,6 +329,16 @@ export const getExpectedDeliveryDate = () => {
   return deliveryDate.toLocaleDateString('en-GB');
 };
 
+export const formatPrice = (price: string | number | undefined) => {
+  if (!price) return '₹ 0';
+  const priceStr = String(price).trim();
+  // Add rupee symbol if not already present
+  if (!priceStr.includes('₹')) {
+    return `₹ ${priceStr}`;
+  }
+  return priceStr;
+};
+
 export const getProductCartMeta = (product: Product, quantity = 1) => {
   const netWeight = parseProductMetric(product.netWeight);
   const purityValue = product.purity.toLowerCase().includes("silver") ? 0.92 : 0.9;
