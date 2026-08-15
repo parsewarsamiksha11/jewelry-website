@@ -45,6 +45,8 @@ const CART_ITEMS_KEY = "jewelcasa-cart-items";
 type CartEntry = {
   id: string;
   quantity: number;
+  comment?: string;
+  size?: string;
 };
 
 const getStoredIds = (key: string) => {
@@ -74,7 +76,12 @@ const getStoredCartEntries = () => {
       }
 
       if (item && typeof item.id === "string" && typeof item.quantity === "number") {
-        entries.push({ id: item.id, quantity: Math.max(1, item.quantity) });
+        entries.push({
+          id: item.id,
+          quantity: Math.max(1, item.quantity),
+          comment: typeof item.comment === "string" ? item.comment : undefined,
+          size: typeof item.size === "string" ? item.size : undefined,
+        });
       }
 
       return entries;
@@ -97,6 +104,7 @@ export function ProductDetail() {
   const [wished, setWished] = useState(false);
   const [addedToBag, setAddedToBag] = useState(false);
   const [qty, setQty] = useState(0);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -106,8 +114,10 @@ export function ProductDetail() {
       setWished(getStoredFavoriteIds().includes(product.id));
       setAddedToBag(isInCart);
       setQty(existing?.quantity ?? 0);
+      setComment(existing?.comment || "");
+      setSelectedSize(existing?.size ?? product.size ?? null);
     }
-  }, [product.id]);
+  }, [product.id, product.size]);
 
   function handleAddToBag() {
     if (typeof window === "undefined") return;
@@ -117,10 +127,12 @@ export function ProductDetail() {
     const existingIndex = cartEntries.findIndex((entry) => entry.id === product.id);
     const nextCartEntries = [...cartEntries];
 
+    const chosenSize = selectedSize ?? product.size ?? "-";
+
     if (existingIndex >= 0) {
-      nextCartEntries[existingIndex] = { ...nextCartEntries[existingIndex], quantity: currentQty };
+      nextCartEntries[existingIndex] = { ...nextCartEntries[existingIndex], quantity: currentQty, comment, size: chosenSize };
     } else {
-      nextCartEntries.push({ id: product.id, quantity: currentQty });
+      nextCartEntries.push({ id: product.id, quantity: currentQty, comment, size: chosenSize });
     }
 
     const totalCount = nextCartEntries.reduce((sum, entry) => sum + entry.quantity, 0);
@@ -142,7 +154,7 @@ export function ProductDetail() {
     const filtered = cartEntries.filter((entry) => entry.id !== product.id);
 
     if (nextQty > 0) {
-      const nextCartEntries = [...filtered, { id: product.id, quantity: nextQty }];
+      const nextCartEntries = [...filtered, { id: product.id, quantity: nextQty, comment, size: selectedSize ?? product.size ?? "-" }];
       const totalCount = nextCartEntries.reduce((sum, entry) => sum + entry.quantity, 0);
       window.localStorage.setItem(CART_ITEMS_KEY, JSON.stringify(nextCartEntries));
       window.localStorage.setItem("jewelcasa-cart-count", String(totalCount));
@@ -331,6 +343,8 @@ export function ProductDetail() {
               <input
                 type="text"
                 placeholder="Write your comment here..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
                 className="w-full bg-transparent outline-none text-[15px] placeholder:text-[#7a6d60]"
               />
               <button className="ml-3 text-[#7a6d60] hover:text-[#1f1b18]" aria-label="Send comment">

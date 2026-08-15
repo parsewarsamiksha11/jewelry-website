@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
-import { Heart, Minus, Plus, Trash2 } from "lucide-react";
+import { Heart, Minus, Plus, Trash2, ChevronUp, ChevronDown, Edit } from "lucide-react";
 import { PRODUCT_LOOKUP, getProductCartMeta, parseProductMetric } from "../data/products";
 
 const CART_ITEMS_KEY = "jewelcasa-cart-items";
@@ -9,6 +9,8 @@ const FAVORITES_KEY = "jewelcasa-favorites";
 type CartEntry = {
   id: string;
   quantity: number;
+  comment?: string;
+  size?: string;
 };
 
 const getStoredCartEntries = () => {
@@ -26,7 +28,12 @@ const getStoredCartEntries = () => {
       }
 
       if (item && typeof item.id === "string" && typeof item.quantity === "number") {
-        entries.push({ id: item.id, quantity: Math.max(1, item.quantity) });
+        entries.push({
+          id: item.id,
+          quantity: Math.max(1, item.quantity),
+          comment: typeof item.comment === "string" ? item.comment : undefined,
+          size: typeof item.size === "string" ? item.size : undefined,
+        });
       }
 
       return entries;
@@ -61,9 +68,15 @@ export function Cart() {
         .map((entry) => {
           const product = PRODUCT_LOOKUP[entry.id];
           if (!product) return null;
-          return { ...product, ...getProductCartMeta(product, entry.quantity), quantity: entry.quantity };
+          return {
+            ...product,
+            ...getProductCartMeta(product, entry.quantity),
+            quantity: entry.quantity,
+            comment: entry.comment,
+            size: entry.size || product.size || "-",
+          };
         })
-        .filter((item): item is (typeof PRODUCT_LOOKUP)[keyof typeof PRODUCT_LOOKUP] & { quantity: number; code: string; estimateDelivery: string; laborCharges: string; fineWeight: string } => Boolean(item)),
+        .filter((item): item is (typeof PRODUCT_LOOKUP)[keyof typeof PRODUCT_LOOKUP] & { quantity: number; code: string; estimateDelivery: string; laborCharges: string; fineWeight: string; comment?: string; size?: string } => Boolean(item)),
     [cartItems]
   );
 
@@ -90,6 +103,13 @@ export function Cart() {
     updateCartItems(next);
   };
 
+  const updateComment = (id: string, comment: string) => {
+    const next = cartItems.map((item) =>
+      item.id === id ? { ...item, comment } : item
+    );
+    updateCartItems(next);
+  };
+
   const moveToWishlist = (id: string) => {
     const favorites = getStoredIds(FAVORITES_KEY);
     const nextFavorites = favorites.includes(id) ? favorites : [...favorites, id];
@@ -110,15 +130,15 @@ export function Cart() {
         <div className="flex flex-col xl:flex-row gap-8">
           <div className="flex-1 overflow-hidden border border-[#d7cdb8] bg-white/20">
             <div className="flex border-b border-[#d7cdb8] bg-[#e7e0d9]">
-              <div className="w-[24%] px-4 py-3 text-center text-[15px] font-medium text-[#2c2926]">Product</div>
-              <div className="w-[8%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Net Wt.</div>
-              <div className="w-[8%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Purity</div>
-              <div className="w-[12%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Labour Charges</div>
-              <div className="w-[12%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Quantity</div>
-              <div className="w-[9%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Total Net Wt.</div>
-              <div className="w-[9%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Total Fine Wt.</div>
-              <div className="w-[9%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Size</div>
-              <div className="w-[10%] px-2 py-3 text-center text-[15px] font-medium text-[#2c2926]">Comment</div>
+              <div className="w-[21%] px-4 py-4 text-center text-[15px] font-medium text-[#2c2926]">Product</div>
+              <div className="w-[8%] px-2 py-4 text-center text-[15px] font-medium text-[#2c2926]">Net Wt.</div>
+              <div className="w-[8%] px-2 py-4 text-center text-[15px] font-medium text-[#2c2926]">Purity</div>
+              <div className="w-[11%] px-2 py-4 text-center text-[15px] font-medium text-[#2c2926]">Labour Charges</div>
+              <div className="w-[12%] px-2 py-4 text-center text-[15px] font-medium text-[#2c2926]">Quantity</div>
+              <div className="w-[9%] px-2 py-4 text-center text-[15px] font-medium text-[#2c2926]">Total Net Wt.</div>
+              <div className="w-[9%] px-2 py-4 text-center text-[15px] font-medium text-[#2c2926]">Total Fine Wt.</div>
+              <div className="w-[7%] px-2 py-4 text-center text-[15px] font-medium text-[#2c2926]">Size</div>
+              <div className="w-[15%] min-w-[180px] px-2 py-4 text-center text-[15px] font-medium text-[#2c2926]">Comment</div>
             </div>
 
             {items.length === 0 ? (
@@ -130,8 +150,8 @@ export function Cart() {
               </div>
             ) : (
               items.map((item) => (
-                <div key={item.id} className="flex border-b border-[#d7cdb8] last:border-b-0 bg-[#fbfaf7]">
-                  <div className="w-[24%] px-4 py-4 flex gap-4 items-start">
+                <div key={item.id} className="flex border-b border-[#d7cdb8] last:border-b-0 bg-[#fbfaf7] min-h-[170px]">
+                  <div className="w-[21%] px-4 py-5 flex gap-4 items-start">
                     <div className="w-[96px] h-[90px] border border-[#ded5c7] bg-[#f4f1eb] overflow-hidden shrink-0">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     </div>
@@ -146,45 +166,52 @@ export function Cart() {
                     </div>
                   </div>
 
-                  <div className="w-[8%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">{item.netWeight}</div>
-                  <div className="w-[8%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">{item.purity}</div>
-                  <div className="w-[12%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">{item.laborCharges}</div>
+                  <div className="w-[8%] px-2 py-5 text-center text-[15px] text-[#2d2a27]">{item.netWeight}</div>
+                  <div className="w-[8%] px-2 py-5 text-center text-[15px] text-[#2d2a27]">{item.purity}</div>
+                  <div className="w-[11%] px-2 py-5 text-center text-[15px] text-[#2d2a27]">{item.laborCharges}</div>
 
-                  <div className="w-[12%] px-2 py-4 flex items-center justify-center gap-2 text-[15px] text-[#2d2a27]">
-                    <button
-                      onClick={() => adjustQuantity(item.id, -1)}
-                      className="w-7 h-7 border border-[#cbb89c] bg-white flex items-center justify-center hover:bg-[#f7efe7]"
-                      aria-label="Decrease quantity"
-                    >
-                      <Minus size={14} />
-                    </button>
-                    <span className="min-w-[18px] text-center">{item.quantity}</span>
-                    <button
-                      onClick={() => adjustQuantity(item.id, 1)}
-                      className="w-7 h-7 border border-[#cbb89c] bg-white flex items-center justify-center hover:bg-[#f7efe7]"
-                      aria-label="Increase quantity"
-                    >
-                      <Plus size={14} />
-                    </button>
-                    <button onClick={() => removeItem(item.id)} className="ml-2 text-[11px] uppercase text-[#b75e4e] hover:text-[#8d463a]">Remove</button>
-                  </div>
-
-                  <div className="w-[9%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">
-                    {(parseProductMetric(item.netWeight) * item.quantity).toFixed(2)} gm
-                  </div>
-                  <div className="w-[9%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">
-                    {(parseProductMetric(item.fineWeight) * item.quantity).toFixed(2)} gm
-                  </div>
-                  <div className="w-[9%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">-</div>
-                  <div className="w-[10%] px-2 py-4 text-center text-[15px] text-[#2d2a27]">
-                    <input
-                      type="text"
-                      placeholder="Write your comment here..."
-                      className="w-full bg-transparent border border-[#d7cdb8] px-2 py-2 text-[12px] placeholder:text-[#735b41] outline-none"
-                    />
+                  <div className="w-[12%] px-2 py-5 flex flex-col items-center justify-center text-[15px] text-[#2d2a27]">
+                    <div className="flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => adjustQuantity(item.id, -1)}
+                        className="w-7 h-7 border border-[#cbb89c] bg-white flex items-center justify-center hover:bg-[#f7efe7]"
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="min-w-[24px] text-center">{item.quantity}</span>
+                      <button
+                        onClick={() => adjustQuantity(item.id, 1)}
+                        className="w-7 h-7 border border-[#cbb89c] bg-white flex items-center justify-center hover:bg-[#f7efe7]"
+                        aria-label="Increase quantity"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                    <button onClick={() => removeItem(item.id)} className="mt-3 text-[11px] uppercase text-[#b75e4e] hover:text-[#8d463a]">Remove</button>
                     <button onClick={() => moveToWishlist(item.id)} className="mt-2 inline-flex items-center gap-1 text-[11px] uppercase text-[#7d684d] hover:text-[#5b4636]">
                       <Heart size={12} /> Move to wishlist
                     </button>
+                  </div>
+
+                  <div className="w-[9%] px-2 py-5 text-center text-[15px] text-[#2d2a27]">
+                    {(parseProductMetric(item.netWeight) * item.quantity).toFixed(2)} gm
+                  </div>
+                  <div className="w-[9%] px-2 py-5 text-center text-[15px] text-[#2d2a27]">
+                    {(parseProductMetric(item.fineWeight) * item.quantity).toFixed(2)} gm
+                  </div>
+                  <div className="w-[7%] px-2 py-5 text-center text-[15px] text-[#2d2a27]">{item.size || "-"}</div>
+                  <div className="w-[15%] min-w-[180px] px-2 py-5 text-center text-[15px] text-[#2d2a27]">
+                    <div className="mx-auto w-[140px]">
+                      <textarea
+                        rows={4}
+                        placeholder="Write your comment here..."
+                        value={item.comment || ""}
+                        onChange={(e) => updateComment(item.id, e.target.value)}
+                        className="w-full h-[96px] max-h-[140px] resize-y overflow-auto bg-transparent border border-[#d7cdb8] px-2 py-2 text-[12px] placeholder:text-[#735b41] outline-none"
+                      />
+                    </div>
+
                   </div>
                 </div>
               ))

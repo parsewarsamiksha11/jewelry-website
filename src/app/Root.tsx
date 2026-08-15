@@ -184,12 +184,11 @@ export function Root() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col" style={{ fontFamily: "'Jost', sans-serif" }}>
-      {!isProductDetailPage && (
-        <header
-          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-            scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-background/80 backdrop-blur-sm"
-          } border-b border-border`}
-        >
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-background/80 backdrop-blur-sm"
+        } border-b border-border`}
+      >
           <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-16">
             <nav className="hidden md:flex items-center gap-8">
               {NAV_LINKS.slice(0, 2).map((l) => (
@@ -318,7 +317,7 @@ export function Root() {
             </div>
           )}
         </header>
-      )}
+      )
 
       {menuOpen && (
         <div className="md:hidden bg-background border-t border-border px-6 py-6 flex flex-col gap-5">
@@ -335,7 +334,7 @@ export function Root() {
         </div>
       )}
 
-      <main className={`flex-1 ${isProductDetailPage ? "pt-0" : "pt-16"}`}>
+      <main className="flex-1 pt-16">
         <Outlet />
       </main>
 
