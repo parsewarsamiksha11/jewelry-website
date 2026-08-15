@@ -26,9 +26,44 @@ export function Contact() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSent(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const text = await response.text();
+      let data: { message?: string } = {};
+
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = { message: text };
+        }
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || "Unable to send message.");
+      }
+
+      if ((data as any).preview) {
+        const preview = (data as any).preview;
+        console.log('Email preview URL:', preview);
+        window.alert(`Message queued. Preview: ${preview}`);
+      }
+
+      setSent(true);
+    } catch (error) {
+      console.error(error);
+      window.alert(error instanceof Error ? error.message : "Unable to send message right now.");
+    }
   }
 
   return (

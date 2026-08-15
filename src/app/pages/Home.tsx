@@ -18,9 +18,48 @@ export function Home() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  function handleSubscribe(e: React.FormEvent) {
+  async function handleSubscribe(e: React.FormEvent) {
     e.preventDefault();
-    if (email.trim()) setSubmitted(true);
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) return;
+
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: trimmedEmail }),
+      });
+
+      const text = await response.text();
+      let data: { message?: string } = {};
+
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = { message: text };
+        }
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || "Unable to subscribe.");
+      }
+
+      if ((data as any).preview) {
+        const preview = (data as any).preview;
+        console.log('Subscription email preview URL:', preview);
+        window.alert(`Subscription queued. Preview: ${preview}`);
+      }
+
+      setEmail("");
+      setSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      window.alert(error instanceof Error ? error.message : "Unable to subscribe right now.");
+    }
   }
 
   return (
