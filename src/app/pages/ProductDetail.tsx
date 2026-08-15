@@ -1,10 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
-import { ArrowLeft, ArrowRight, ChevronDown, ChevronUp, Heart } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, ChevronUp, Heart, Share2 } from "lucide-react";
 
 const PRODUCTS: Record<string, {
-  id: string; name: string; category: string; material: string;
-  price: string; tag: string | null; description: string;
+  id: string;
+  name: string;
+  category: string;
+  sku: string;
+  vendor: string;
+  purity: string;
+  price: string;
+  material: string;
+  tag: string | null;
+  description: string;
+  availability: string;
+  netWeight: string;
+  wastage: string;
+  size: string;
+  color: string;
+  subCategory: string;
+  expectedDelivery: string;
+  exchangeEligibility: string;
   details: { label: string; value: string }[];
   images: { src: string; alt: string }[];
   related: { id: string; name: string; price: string; image: string; alt: string }[];
@@ -12,424 +28,818 @@ const PRODUCTS: Record<string, {
   "JW-0041": {
     id: "JW-0041",
     name: "Lumière Solitaire",
-    category: "Rings",
+    category: "22KT Ready",
+    sku: "ZZCAJE937472",
+    vendor: "SKU: ST-NZYXAO",
+    purity: "18KT",
+    price: "₹ 8,40,000",
     material: "18k White Gold · 1.2ct Diamond",
-    price: "€ 8,400",
     tag: "New",
     description:
-      "The Lumière Solitaire distills decades of diamond-setting craft into a single, unforgettable gesture. A brilliant-cut stone of exceptional clarity is raised on a hand-forged white gold shank, allowing light to enter from every angle. The result is a ring that appears to hold its own light source.",
+      "An elegant solitaire ring featuring a brilliant 1.2 carat diamond set in 18k white gold, perfect for timeless elegance and special occasions.",
+    availability: "Ready Stock",
+    netWeight: "3.79 gm",
+    wastage: "4.5 %",
+    size: "7",
+    color: "White Gold",
+    subCategory: "DIAMOND",
+    expectedDelivery: "16/08/2026",
+    exchangeEligibility: "Yes",
     details: [
-      { label: "Metal", value: "18k White Gold (750‰)" },
-      { label: "Stone", value: "1.20ct Round Brilliant Diamond" },
-      { label: "Colour", value: "G — Near Colourless" },
-      { label: "Clarity", value: "VS1" },
-      { label: "Certificate", value: "GIA #6274839102" },
-      { label: "Setting", value: "4-Claw Solitaire" },
-      { label: "Width", value: "1.8mm" },
-      { label: "Origin", value: "Atelier Vêlore, Paris" },
+      { label: "Availability", value: "Ready Stock" },
+      { label: "Net Weight", value: "3.79 gm" },
+      { label: "Wastage", value: "4.5 %" },
+      { label: "Size", value: "7" },
+      { label: "Color", value: "White Gold" },
+      { label: "Category", value: "22KT Ready" },
+      { label: "Sub Category", value: "DIAMOND" },
+      { label: "Expected Delivery Date", value: "16/08/2026" },
+      { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
       {
-        src: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=900&h=1100&fit=crop&auto=format",
-        alt: "Lumière Solitaire — front view",
+        src: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Lumière Solitaire ring front view",
       },
       {
-        src: "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?w=900&h=1100&fit=crop&auto=format",
-        alt: "Lumière Solitaire — group of gold rings",
+        src: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Diamond ring detail view",
       },
       {
-        src: "https://images.unsplash.com/photo-1720093601709-66ce9c0068a1?w=900&h=1100&fit=crop&auto=format",
-        alt: "Lumière Solitaire — on box",
+        src: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Ring with jewelry styling",
       },
     ],
     related: [
       {
         id: "JW-0028",
         name: "Verdure Cocktail Ring",
-        price: "€ 5,900",
+        price: "₹ 5,90,000",
         image: "https://images.unsplash.com/photo-1592317295760-5c1f677dfc78?w=400&h=500&fit=crop&auto=format",
         alt: "Emerald gold ring",
       },
       {
         id: "JW-0033",
         name: "Nocturne Band",
-        price: "€ 3,200",
+        price: "₹ 3,20,000",
         image: "https://images.unsplash.com/photo-1713950920412-97799efdf870?w=400&h=500&fit=crop&auto=format",
         alt: "Ring on dark surface",
-      },
-      {
-        id: "JW-0017",
-        name: "Trèfle Ring",
-        price: "€ 2,800",
-        image: "https://images.unsplash.com/photo-1705326455036-0fab8ecba04d?w=400&h=500&fit=crop&auto=format",
-        alt: "Gold ring on white",
       },
     ],
   },
   "JW-0028": {
     id: "JW-0028",
     name: "Verdure Cocktail Ring",
-    category: "Rings",
-    material: "18k Yellow Gold · Colombian Emerald",
-    price: "€ 5,900",
+    category: "22KT Ready",
+    sku: "ZZVDR347891",
+    vendor: "SKU: ST-EMRLD",
+    purity: "18KT",
+    price: "₹ 5,90,000",
+    material: "18k Yellow Gold · Emerald",
     tag: "Rare",
     description:
-      "Verdure draws its name from the rich, living green of the Colombian emerald at its heart. Set in warm 22-karat yellow gold with an open-claw silhouette, the stone is given full visibility — its inclusions and natural character celebrated rather than hidden.",
+      "A richly coloured emerald ring set in yellow gold with a statement silhouette suited for festive and bridal styling.",
+    availability: "Ready Stock",
+    netWeight: "4.15 gm",
+    wastage: "3.5 %",
+    size: "7",
+    color: "Yellow Gold",
+    subCategory: "EMERALD",
+    expectedDelivery: "20/08/2026",
+    exchangeEligibility: "Yes",
     details: [
-      { label: "Metal", value: "18k Yellow Gold (750‰)" },
-      { label: "Stone", value: "2.4ct Colombian Emerald" },
-      { label: "Colour", value: "Vivid Green" },
-      { label: "Origin", value: "Muzo, Colombia" },
-      { label: "Setting", value: "Open Claw" },
-      { label: "Width", value: "4mm at centre" },
-      { label: "Certificate", value: "Gübelin #25-034871" },
-      { label: "Atelier", value: "Vêlore, Paris" },
+      { label: "Availability", value: "Ready Stock" },
+      { label: "Net Weight", value: "4.15 gm" },
+      { label: "Wastage", value: "3.5 %" },
+      { label: "Size", value: "7" },
+      { label: "Color", value: "Yellow Gold" },
+      { label: "Category", value: "22KT Ready" },
+      { label: "Sub Category", value: "EMERALD" },
+      { label: "Expected Delivery Date", value: "20/08/2026" },
+      { label: "Exchange Eligibility", value: "Yes" },
     ],
     images: [
       {
-        src: "https://images.unsplash.com/photo-1592317295760-5c1f677dfc78?w=900&h=1100&fit=crop&auto=format",
-        alt: "Verdure Cocktail Ring — front",
+        src: "https://images.unsplash.com/photo-1592317295760-5c1f677dfc78?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Verdure Cocktail Ring front view",
       },
       {
-        src: "https://images.unsplash.com/photo-1561812350-932aed735105?w=900&h=1100&fit=crop&auto=format",
-        alt: "Gold and blue gemstone ring",
+        src: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Gold ring detail view",
       },
     ],
     related: [
       {
         id: "JW-0041",
         name: "Lumière Solitaire",
-        price: "€ 8,400",
+        price: "₹ 8,40,000",
         image: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=400&h=500&fit=crop&auto=format",
-        alt: "Diamond solitaire ring",
+        alt: "Solitaire ring",
       },
       {
         id: "JW-0033",
         name: "Nocturne Band",
-        price: "€ 3,200",
+        price: "₹ 3,20,000",
         image: "https://images.unsplash.com/photo-1713950920412-97799efdf870?w=400&h=500&fit=crop&auto=format",
-        alt: "Ring on dark surface",
+        alt: "Dark ring",
+      },
+    ],
+  },
+  "JW-0033": {
+    id: "JW-0033",
+    name: "Nocturne Band",
+    category: "18KT Ready",
+    sku: "ZZNOC234567",
+    vendor: "SKU: ST-BLACK",
+    purity: "18KT",
+    price: "₹ 3,20,000",
+    material: "18k Black Gold · Pavé",
+    tag: null,
+    description:
+      "A sophisticated black gold band featuring pavé-set diamonds for a contemporary and luxurious aesthetic perfect for modern style.",
+    availability: "Ready Stock",
+    netWeight: "2.85 gm",
+    wastage: "3.8 %",
+    size: "7",
+    color: "Black Gold",
+    subCategory: "BAND",
+    expectedDelivery: "17/08/2026",
+    exchangeEligibility: "Yes",
+    details: [
+      { label: "Availability", value: "Ready Stock" },
+      { label: "Net Weight", value: "2.85 gm" },
+      { label: "Wastage", value: "3.8 %" },
+      { label: "Size", value: "7" },
+      { label: "Color", value: "Black Gold" },
+      { label: "Category", value: "18KT Ready" },
+      { label: "Sub Category", value: "BAND" },
+      { label: "Expected Delivery Date", value: "17/08/2026" },
+      { label: "Exchange Eligibility", value: "Yes" },
+    ],
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1713950920412-97799efdf870?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Nocturne Band front view",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Band detail view",
+      },
+    ],
+    related: [
+      {
+        id: "JW-0041",
+        name: "Lumière Solitaire",
+        price: "₹ 8,40,000",
+        image: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=400&h=500&fit=crop&auto=format",
+        alt: "Solitaire ring",
+      },
+      {
+        id: "JW-0028",
+        name: "Verdure Cocktail Ring",
+        price: "₹ 5,90,000",
+        image: "https://images.unsplash.com/photo-1592317295760-5c1f677dfc78?w=400&h=500&fit=crop&auto=format",
+        alt: "Emerald ring",
+      },
+    ],
+  },
+  "JW-0017": {
+    id: "JW-0017",
+    name: "Trèfle Ring",
+    category: "18KT Ready",
+    sku: "ZZTRF123456",
+    vendor: "SKU: ST-CLOVER",
+    purity: "22KT",
+    price: "₹ 2,80,000",
+    material: "22k Yellow Gold · Clover Motif",
+    tag: null,
+    description:
+      "An elegant clover-motif ring crafted in 22k yellow gold, symbolizing luck and prosperity with intricate traditional detailing.",
+    availability: "Ready Stock",
+    netWeight: "3.25 gm",
+    wastage: "4.2 %",
+    size: "6.5",
+    color: "Yellow Gold",
+    subCategory: "MOTIF",
+    expectedDelivery: "18/08/2026",
+    exchangeEligibility: "Yes",
+    details: [
+      { label: "Availability", value: "Ready Stock" },
+      { label: "Net Weight", value: "3.25 gm" },
+      { label: "Wastage", value: "4.2 %" },
+      { label: "Size", value: "6.5" },
+      { label: "Color", value: "Yellow Gold" },
+      { label: "Category", value: "18KT Ready" },
+      { label: "Sub Category", value: "MOTIF" },
+      { label: "Expected Delivery Date", value: "18/08/2026" },
+      { label: "Exchange Eligibility", value: "Yes" },
+    ],
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1705326455036-0fab8ecba04d?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Trèfle Ring front view",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Ring detail view",
+      },
+    ],
+    related: [
+      {
+        id: "JW-0041",
+        name: "Lumière Solitaire",
+        price: "₹ 8,40,000",
+        image: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=400&h=500&fit=crop&auto=format",
+        alt: "Solitaire ring",
+      },
+      {
+        id: "JW-0055",
+        name: "Arc Pearl Strand",
+        price: "₹ 4,10,000",
+        image: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=400&h=500&fit=crop&auto=format",
+        alt: "Pearl necklace",
+      },
+    ],
+  },
+  "JW-0055": {
+    id: "JW-0055",
+    name: "Arc Pearl Strand",
+    category: "Silver Ready",
+    sku: "ZZARCP8750",
+    vendor: "SKU: ST-PEARL",
+    purity: "Silver",
+    price: "₹ 4,10,000",
+    material: "Akoya Pearls · 14k Clasp",
+    tag: "Signature",
+    description:
+      "A refined statement necklace featuring hand-selected Akoya pearls in a graceful arc finish with a polished 14k gold clasp.",
+    availability: "Ready Stock",
+    netWeight: "17.5 gm",
+    wastage: "4.2 %",
+    size: "45 cm",
+    color: "Pearl White",
+    subCategory: "PEARL",
+    expectedDelivery: "18/08/2026",
+    exchangeEligibility: "Yes",
+    details: [
+      { label: "Availability", value: "Ready Stock" },
+      { label: "Net Weight", value: "17.5 gm" },
+      { label: "Wastage", value: "4.2 %" },
+      { label: "Size", value: "45 cm" },
+      { label: "Color", value: "Pearl White" },
+      { label: "Category", value: "Silver Ready" },
+      { label: "Sub Category", value: "PEARL" },
+      { label: "Expected Delivery Date", value: "18/08/2026" },
+      { label: "Exchange Eligibility", value: "Yes" },
+    ],
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Arc Pearl Strand close up",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1595345705177-ffe090eb0784?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Pearl necklace on grey textile",
+      },
+    ],
+    related: [
+      {
+        id: "JW-0041",
+        name: "Lumière Solitaire",
+        price: "₹ 8,40,000",
+        image: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=400&h=500&fit=crop&auto=format",
+        alt: "Solitaire ring",
+      },
+      {
+        id: "JW-0044",
+        name: "Nacre Statement",
+        price: "₹ 6,80,000",
+        image: "https://images.unsplash.com/photo-1595345705177-ffe090eb0784?w=400&h=500&fit=crop&auto=format",
+        alt: "Pearl statement necklace",
+      },
+    ],
+  },
+  "JW-0062": {
+    id: "JW-0062",
+    name: "Rivière Necklace",
+    category: "Chain",
+    sku: "ZZRVR567890",
+    vendor: "SKU: ST-RIVER",
+    purity: "18KT",
+    price: "₹ 12,60,000",
+    material: "18k White Gold · Diamond Line",
+    tag: "New",
+    description:
+      "A stunning rivière necklace featuring a continuous line of brilliant diamonds set in 18k white gold for timeless elegance.",
+    availability: "Ready Stock",
+    netWeight: "12.40 gm",
+    wastage: "3.5 %",
+    size: "42 cm",
+    color: "White Gold",
+    subCategory: "DIAMOND LINE",
+    expectedDelivery: "19/08/2026",
+    exchangeEligibility: "Yes",
+    details: [
+      { label: "Availability", value: "Ready Stock" },
+      { label: "Net Weight", value: "12.40 gm" },
+      { label: "Wastage", value: "3.5 %" },
+      { label: "Size", value: "42 cm" },
+      { label: "Color", value: "White Gold" },
+      { label: "Category", value: "Chain" },
+      { label: "Sub Category", value: "DIAMOND LINE" },
+      { label: "Expected Delivery Date", value: "19/08/2026" },
+      { label: "Exchange Eligibility", value: "Yes" },
+    ],
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1631832722475-dd2ecfc47257?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Rivière Necklace front view",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Necklace detail view",
+      },
+    ],
+    related: [
+      {
+        id: "JW-0055",
+        name: "Arc Pearl Strand",
+        price: "₹ 4,10,000",
+        image: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=400&h=500&fit=crop&auto=format",
+        alt: "Pearl necklace",
+      },
+      {
+        id: "JW-0044",
+        name: "Nacre Statement",
+        price: "₹ 6,80,000",
+        image: "https://images.unsplash.com/photo-1595345705177-ffe090eb0784?w=400&h=500&fit=crop&auto=format",
+        alt: "Pearl statement necklace",
+      },
+    ],
+  },
+  "JW-0044": {
+    id: "JW-0044",
+    name: "Nacre Statement",
+    category: "Mangalsutra",
+    sku: "ZZNACR234567",
+    vendor: "SKU: ST-NACRE",
+    purity: "18KT",
+    price: "₹ 6,80,000",
+    material: "South Sea Pearl · 18k Setting",
+    tag: null,
+    description:
+      "An exquisite mangalsutra featuring lustrous South Sea pearls set in 18k gold, combining tradition with contemporary elegance.",
+    availability: "Ready Stock",
+    netWeight: "8.50 gm",
+    wastage: "3.8 %",
+    size: "48 cm",
+    color: "Yellow Gold",
+    subCategory: "PEARL MANGALSUTRA",
+    expectedDelivery: "21/08/2026",
+    exchangeEligibility: "Yes",
+    details: [
+      { label: "Availability", value: "Ready Stock" },
+      { label: "Net Weight", value: "8.50 gm" },
+      { label: "Wastage", value: "3.8 %" },
+      { label: "Size", value: "48 cm" },
+      { label: "Color", value: "Yellow Gold" },
+      { label: "Category", value: "Mangalsutra" },
+      { label: "Sub Category", value: "PEARL MANGALSUTRA" },
+      { label: "Expected Delivery Date", value: "21/08/2026" },
+      { label: "Exchange Eligibility", value: "Yes" },
+    ],
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1595345705177-ffe090eb0784?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Nacre Statement front view",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1631832722475-dd2ecfc47257?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Necklace detail view",
+      },
+    ],
+    related: [
+      {
+        id: "JW-0055",
+        name: "Arc Pearl Strand",
+        price: "₹ 4,10,000",
+        image: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=400&h=500&fit=crop&auto=format",
+        alt: "Pearl necklace",
+      },
+      {
+        id: "JW-0062",
+        name: "Rivière Necklace",
+        price: "₹ 12,60,000",
+        image: "https://images.unsplash.com/photo-1631832722475-dd2ecfc47257?w=400&h=500&fit=crop&auto=format",
+        alt: "Diamond necklace",
+      },
+    ],
+  },
+  "JW-0039": {
+    id: "JW-0039",
+    name: "Aube Pendant",
+    category: "Bracelet",
+    sku: "ZZAUB345678",
+    vendor: "SKU: ST-AUBE",
+    purity: "18KT",
+    price: "₹ 3,75,000",
+    material: "18k Rose Gold · Sapphire Drop",
+    tag: null,
+    description:
+      "A delicate rose gold bracelet featuring a stunning sapphire drop pendant, perfect for adding a sophisticated touch to any occasion.",
+    availability: "Ready Stock",
+    netWeight: "5.75 gm",
+    wastage: "4.0 %",
+    size: "7.5 cm",
+    color: "Rose Gold",
+    subCategory: "SAPPHIRE",
+    expectedDelivery: "19/08/2026",
+    exchangeEligibility: "Yes",
+    details: [
+      { label: "Availability", value: "Ready Stock" },
+      { label: "Net Weight", value: "5.75 gm" },
+      { label: "Wastage", value: "4.0 %" },
+      { label: "Size", value: "7.5 cm" },
+      { label: "Color", value: "Rose Gold" },
+      { label: "Category", value: "Bracelet" },
+      { label: "Sub Category", value: "SAPPHIRE" },
+      { label: "Expected Delivery Date", value: "19/08/2026" },
+      { label: "Exchange Eligibility", value: "Yes" },
+    ],
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1561812350-932aed735105?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Aube Pendant bracelet front view",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&h=1400&fit=crop&auto=format",
+        alt: "Bracelet detail view",
+      },
+    ],
+    related: [
+      {
+        id: "JW-0028",
+        name: "Verdure Cocktail Ring",
+        price: "₹ 5,90,000",
+        image: "https://images.unsplash.com/photo-1592317295760-5c1f677dfc78?w=400&h=500&fit=crop&auto=format",
+        alt: "Emerald ring",
+      },
+      {
+        id: "JW-0055",
+        name: "Arc Pearl Strand",
+        price: "₹ 4,10,000",
+        image: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=400&h=500&fit=crop&auto=format",
+        alt: "Pearl necklace",
       },
     ],
   },
 };
 
 const FALLBACK_PRODUCT = {
-  id: "JW-0055",
-  name: "Arc Pearl Strand",
-  category: "Pearls",
-  material: "Akoya Pearls · 14k Gold Clasp",
-  price: "€ 4,100",
-  tag: "Signature",
-  description:
-    "Fifty-three perfectly matched Akoya pearls, hand-knotted on natural silk, culminate in a 14-karat gold box clasp bearing the Vêlore hallmark. The Arc Pearl Strand is the house's most enduring design — unchanged since 1992.",
-  details: [
-    { label: "Pearl type", value: "Akoya (Pinctada fucata)" },
-    { label: "Diameter", value: "7.0–7.5mm" },
-    { label: "Lustre", value: "AAA — Exceptional" },
-    { label: "Count", value: "53 pearls" },
-    { label: "Length", value: "45cm" },
-    { label: "Clasp", value: "14k Yellow Gold Box" },
-    { label: "Knotting", value: "Hand-knotted, natural silk" },
-    { label: "Origin", value: "Akoya Sea, Japan" },
-  ],
+  id: "UNKNOWN",
+  name: "Product Not Found",
+  category: "Unknown",
+  sku: "N/A",
+  vendor: "N/A",
+  purity: "N/A",
+  price: "Contact for price",
+  material: "N/A",
+  tag: null,
+  description: "This product is not available. Please visit our collections for more options.",
+  availability: "Not Available",
+  netWeight: "N/A",
+  wastage: "N/A",
+  size: "N/A",
+  color: "N/A",
+  subCategory: "N/A",
+  expectedDelivery: "N/A",
+  exchangeEligibility: "N/A",
+  details: [],
   images: [
     {
-      src: "https://images.unsplash.com/photo-1654699991520-aaaf4dd2608b?w=900&h=1100&fit=crop&auto=format",
-      alt: "Arc Pearl Strand — close up",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1595345705177-ffe090eb0784?w=900&h=1100&fit=crop&auto=format",
-      alt: "Pearl necklace on grey textile",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&h=1100&fit=crop&auto=format",
-      alt: "Pearl necklace in box",
+      src: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1200&h=1400&fit=crop&auto=format",
+      alt: "Product not found",
     },
   ],
-  related: [
-    {
-      id: "JW-0041",
-      name: "Lumière Solitaire",
-      price: "€ 8,400",
-      image: "https://images.unsplash.com/photo-1611955167811-4711904bb9f8?w=400&h=500&fit=crop&auto=format",
-      alt: "Diamond ring",
-    },
-    {
-      id: "JW-0062",
-      name: "Rivière Necklace",
-      price: "€ 12,600",
-      image: "https://images.unsplash.com/photo-1631832722475-dd2ecfc47257?w=400&h=500&fit=crop&auto=format",
-      alt: "Diamond necklace",
-    },
-  ],
+  related: [],
 };
 
 const SIZES = ["46", "48", "50", "52", "54", "56", "58"];
 
 const ACCORDIONS = [
-  {
-    id: "care",
-    title: "Care & Wear",
-    content:
-      "Store your Vêlore piece in the provided velvet pouch, away from direct sunlight and moisture. Avoid contact with perfumes, chlorine, and ultrasonic cleaners. We recommend an annual professional inspection and re-polishing at our Paris atelier.",
-  },
-  {
-    id: "delivery",
-    title: "Delivery & Packaging",
-    content:
-      "Each piece ships in a lacquered Vêlore box with velvet lining, certificate of authenticity, and care card. Standard delivery is 3–5 business days within Europe. International delivery typically takes 5–10 business days. Fully insured and tracked.",
-  },
-  {
-    id: "bespoke",
-    title: "Bespoke Sizing",
-    content:
-      "All Vêlore rings are available in half and quarter sizes on request. Bespoke sizing requires 2–3 additional weeks. Contact our atelier team to discuss your requirements.",
-  },
+  { id: "care", title: "Description", content: "Premium handcrafted jewelry built with enduring craftsmanship and elegant modern silhouettes." },
+  { id: "delivery", title: "Comment", content: "Write your comment here..." },
 ];
+
+const FAVORITES_KEY = "jewelcasa-favorites";
+const CART_ITEMS_KEY = "jewelcasa-cart-items";
+
+type CartEntry = {
+  id: string;
+  quantity: number;
+};
+
+const getStoredIds = (key: string) => {
+  if (typeof window === "undefined") return [] as string[];
+
+  try {
+    const raw = window.localStorage.getItem(key);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string") : [];
+  } catch {
+    return [] as string[];
+  }
+};
+
+const getStoredCartEntries = () => {
+  if (typeof window === "undefined") return [] as CartEntry[];
+
+  try {
+    const raw = window.localStorage.getItem(CART_ITEMS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(parsed)) return [] as CartEntry[];
+
+    return parsed.reduce((entries, item) => {
+      if (typeof item === "string") {
+        entries.push({ id: item, quantity: 1 });
+        return entries;
+      }
+
+      if (item && typeof item.id === "string" && typeof item.quantity === "number") {
+        entries.push({ id: item.id, quantity: Math.max(1, item.quantity) });
+      }
+
+      return entries;
+    }, [] as CartEntry[]);
+  } catch {
+    return [] as CartEntry[];
+  }
+};
+
+const getStoredFavoriteIds = () => getStoredIds(FAVORITES_KEY);
+const getStoredCartIds = () => getStoredCartEntries().map((item) => item.id);
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();
-  const product = (id && PRODUCTS[id]) ? PRODUCTS[id] : FALLBACK_PRODUCT;
+  const product = id && PRODUCTS[id] ? PRODUCTS[id] : FALLBACK_PRODUCT;
 
   const [activeImage, setActiveImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [openAccordion, setOpenAccordion] = useState<string | null>("care");
   const [wished, setWished] = useState(false);
   const [addedToBag, setAddedToBag] = useState(false);
+  const [qty, setQty] = useState(0);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const cartEntries = getStoredCartEntries();
+      const existing = cartEntries.find((entry) => entry.id === product.id);
+      const isInCart = !!existing;
+      setWished(getStoredFavoriteIds().includes(product.id));
+      setAddedToBag(isInCart);
+      setQty(existing?.quantity ?? 0);
+    }
+  }, [product.id]);
 
   function handleAddToBag() {
+    if (typeof window === "undefined") return;
+
+    const currentQty = qty + 1;
+    const cartEntries = getStoredCartEntries();
+    const existingIndex = cartEntries.findIndex((entry) => entry.id === product.id);
+    const nextCartEntries = [...cartEntries];
+
+    if (existingIndex >= 0) {
+      nextCartEntries[existingIndex] = { ...nextCartEntries[existingIndex], quantity: currentQty };
+    } else {
+      nextCartEntries.push({ id: product.id, quantity: currentQty });
+    }
+
+    const totalCount = nextCartEntries.reduce((sum, entry) => sum + entry.quantity, 0);
+    window.localStorage.setItem(CART_ITEMS_KEY, JSON.stringify(nextCartEntries));
+    window.localStorage.setItem("jewelcasa-cart-count", String(totalCount));
+    window.dispatchEvent(new CustomEvent("cart-updated", { detail: { count: totalCount } }));
+
+    setQty(currentQty);
     setAddedToBag(true);
-    setTimeout(() => setAddedToBag(false), 2500);
+  }
+
+  function handleQuantityChange(delta: number) {
+    const nextQty = Math.max(0, qty + delta);
+    setQty(nextQty);
+
+    if (typeof window === "undefined") return;
+
+    const cartEntries = getStoredCartEntries();
+    const filtered = cartEntries.filter((entry) => entry.id !== product.id);
+
+    if (nextQty > 0) {
+      const nextCartEntries = [...filtered, { id: product.id, quantity: nextQty }];
+      const totalCount = nextCartEntries.reduce((sum, entry) => sum + entry.quantity, 0);
+      window.localStorage.setItem(CART_ITEMS_KEY, JSON.stringify(nextCartEntries));
+      window.localStorage.setItem("jewelcasa-cart-count", String(totalCount));
+      window.dispatchEvent(new CustomEvent("cart-updated", { detail: { count: totalCount } }));
+      setAddedToBag(true);
+      return;
+    }
+
+    const totalCount = filtered.reduce((sum, entry) => sum + entry.quantity, 0);
+    window.localStorage.setItem(CART_ITEMS_KEY, JSON.stringify(filtered));
+    window.localStorage.setItem("jewelcasa-cart-count", String(totalCount));
+    window.dispatchEvent(new CustomEvent("cart-updated", { detail: { count: totalCount } }));
+    setAddedToBag(false);
+  }
+
+  function handleFavoriteToggle() {
+    if (typeof window === "undefined") return;
+
+    const favorites = getStoredFavoriteIds();
+    const exists = favorites.includes(product.id);
+    const nextFavorites = exists ? favorites.filter((favId) => favId !== product.id) : [...favorites, product.id];
+
+    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(nextFavorites));
+    const nextCount = nextFavorites.length;
+    window.dispatchEvent(new CustomEvent("favorites-updated", { detail: { count: nextCount } }));
+    setWished(!exists);
+  }
+
+  function handleShare() {
+    const shareText = `Check out this product: ${product.name} - ${product.price}`;
+    const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText}\n${shareUrl}`)}`;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6 flex items-center gap-3">
+    <div className="min-h-screen bg-[#f5f1ea] text-[#1f1b18]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6">
         <Link
           to="/collections"
-          className="flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-2 bg-[#c77c6d] text-white px-3 py-2 text-[10px] tracking-[0.18em] uppercase hover:opacity-90 transition-opacity"
         >
           <ArrowLeft size={12} />
-          Collections
+          Back to Shop
         </Link>
-        <span className="text-muted-foreground/40 text-xs">/</span>
-        <span
-          className="text-xs tracking-[0.15em] uppercase text-muted-foreground"
-          style={{ fontFamily: "'DM Mono', monospace" }}
-        >
-          {product.id}
-        </span>
       </div>
 
-      {/* Main grid */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-24 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-        {/* Images */}
-        <div className="flex gap-4">
-          {/* Thumbnails */}
-          <div className="hidden md:flex flex-col gap-3 w-20 flex-shrink-0">
-            {product.images.map((img, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveImage(i)}
-                className={`w-20 aspect-square overflow-hidden bg-muted border-2 transition-colors ${
-                  activeImage === i ? "border-foreground" : "border-transparent"
-                }`}
-              >
-                <img src={img.src.replace("w=900&h=1100", "w=160&h=160")} alt={img.alt} className="w-full h-full object-cover" />
-              </button>
-            ))}
-          </div>
-
-          {/* Main image */}
-          <div className="flex-1 relative overflow-hidden bg-muted aspect-[4/5]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-16 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16">
+        <div className="flex flex-col gap-4">
+          <div className="relative overflow-hidden bg-[#f3efe7] border border-[#e2d8ca] aspect-[4/4.8]">
             <img
               src={product.images[activeImage].src}
               alt={product.images[activeImage].alt}
               className="w-full h-full object-cover"
             />
+            <div className="absolute bottom-3 left-4 text-[#b38d5d] text-[11px] tracking-[0.3em] uppercase italic bg-white/20 px-2 py-1">
+              JEWEL CASA
+            </div>
             {product.tag && (
-              <span
-                className="absolute top-4 left-4 bg-accent text-accent-foreground text-[9px] tracking-[0.25em] uppercase px-2 py-1"
-                style={{ fontFamily: "'DM Mono', monospace" }}
-              >
+              <span className="absolute top-4 left-4 bg-[#c29c67] text-white text-[9px] tracking-[0.2em] uppercase px-2 py-1">
                 {product.tag}
               </span>
             )}
+          </div>
 
-            {/* Mobile thumbnail dots */}
-            <div className="md:hidden absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-              {product.images.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveImage(i)}
-                  className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                    activeImage === i ? "bg-primary-foreground" : "bg-primary-foreground/40"
-                  }`}
-                />
-              ))}
-            </div>
+          <div className="grid grid-cols-3 gap-3 max-w-xl">
+            {product.images.map((img, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveImage(i)}
+                className={`overflow-hidden border ${
+                  activeImage === i ? "border-[#b38d5d]" : "border-[#d9d1c2]"
+                }`}
+              >
+                <img src={img.src} alt={img.alt} className="w-full h-24 object-cover" />
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Info */}
-        <div className="flex flex-col">
-          <p
-            className="text-[10px] tracking-[0.4em] uppercase text-accent mb-2"
-            style={{ fontFamily: "'DM Mono', monospace" }}
-          >
-            {product.category} — {product.id}
-          </p>
-          <h1
-            className="text-4xl lg:text-5xl leading-tight mb-3"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
-          >
+        <div className="pt-2">
+          <h1 className="text-4xl lg:text-[3rem] leading-none mb-2 text-[#171310]" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}>
             {product.name}
           </h1>
-          <p className="text-sm text-muted-foreground font-light mb-6">{product.material}</p>
-          <p
-            className="text-2xl tracking-wider text-foreground mb-8"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            {product.price}
-          </p>
+          <p className="text-[14px] text-[#5e584e] mb-6 uppercase tracking-[0.08em]">{product.id}</p>
 
-          <p className="text-sm leading-[1.85] text-muted-foreground font-light mb-10 max-w-md">
-            {product.description}
-          </p>
+          <div className="flex items-center gap-3 mb-6">
+            <button
+              onClick={handleShare}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#3b7bc7] text-white px-4 py-2 text-[12px] font-medium hover:bg-[#2f6bb4] transition-colors"
+            >
+              <Share2 size={14} />
+              Share
+            </button>
+          </div>
 
-          {/* Size selector — only for rings */}
-          {product.category === "Rings" && (
-            <div className="mb-8">
-              <p
-                className="text-[9px] tracking-[0.3em] uppercase text-muted-foreground mb-4"
-                style={{ fontFamily: "'DM Mono', monospace" }}
-              >
-                Select Size (EU)
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {SIZES.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setSelectedSize(s)}
-                    className={`w-10 h-10 text-xs border transition-colors ${
-                      selectedSize === s
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-transparent text-muted-foreground border-border hover:border-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
+          <div className="mb-6">
+            <p className="text-[12px] uppercase tracking-[0.18em] text-[#7a6d60] mb-2">Purity :</p>
+            <div className="inline-flex bg-[#c89a8a] text-white px-4 py-2 text-[16px] font-semibold uppercase">
+              {product.purity}
             </div>
-          )}
-
-          {/* CTAs */}
-          <div className="flex gap-3 mb-10">
-            <button
-              onClick={handleAddToBag}
-              className={`flex-1 py-4 text-xs tracking-[0.2em] uppercase transition-colors duration-300 ${
-                addedToBag
-                  ? "bg-accent text-accent-foreground"
-                  : "bg-primary text-primary-foreground hover:bg-accent"
-              }`}
-            >
-              {addedToBag ? "Added to Bag ✓" : "Add to Bag"}
-            </button>
-            <button
-              onClick={() => setWished(!wished)}
-              className={`px-4 border transition-colors ${
-                wished ? "border-accent text-accent" : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
-              }`}
-              aria-label="Add to wishlist"
-            >
-              <Heart size={16} fill={wished ? "currentColor" : "none"} />
-            </button>
           </div>
 
-          {/* Details table */}
-          <div className="mb-8 border-t border-border">
-            {product.details.map((d, i) => (
-              <div
-                key={i}
-                className="flex justify-between py-3 border-b border-border text-xs"
-              >
-                <span
-                  className="text-muted-foreground tracking-[0.15em] uppercase"
-                  style={{ fontFamily: "'DM Mono', monospace" }}
-                >
-                  {d.label}
-                </span>
-                <span className="text-foreground font-light">{d.value}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Accordions */}
-          <div className="flex flex-col">
-            {ACCORDIONS.map((acc) => (
-              <div key={acc.id} className="border-b border-border">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row">
+            {addedToBag ? (
+              <div className="flex items-center justify-between flex-1 border border-[#c89a8a] bg-[#f5e7df] px-4 py-3 text-[#3e2d20]">
                 <button
-                  onClick={() => setOpenAccordion(openAccordion === acc.id ? null : acc.id)}
-                  className="w-full flex items-center justify-between py-4 text-xs tracking-[0.2em] uppercase text-left hover:text-accent transition-colors"
+                  onClick={() => handleQuantityChange(-1)}
+                  className="w-10 h-10 flex items-center justify-center border border-[#c89a8a] bg-white text-xl font-medium"
+                  aria-label="Decrease quantity"
                 >
-                  {acc.title}
-                  {openAccordion === acc.id ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                  −
                 </button>
-                {openAccordion === acc.id && (
-                  <p className="text-sm text-muted-foreground font-light leading-relaxed pb-5">
-                    {acc.content}
-                  </p>
-                )}
+                <span className="text-[18px] font-medium min-w-[30px] text-center">{qty}</span>
+                <button
+                  onClick={() => handleQuantityChange(1)}
+                  className="w-10 h-10 flex items-center justify-center border border-[#c89a8a] bg-white text-xl font-medium"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
               </div>
-            ))}
+            ) : (
+              <button
+                onClick={handleAddToBag}
+                className="flex-1 py-4 text-[14px] tracking-[0.2em] uppercase font-semibold bg-[#c7a18c] text-white hover:opacity-90"
+              >
+                Add to Cart
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={handleFavoriteToggle}
+              aria-label={wished ? "Remove from favorites" : "Add to favorites"}
+              className={`inline-flex items-center justify-center gap-2 border px-4 py-4 text-[12px] tracking-[0.18em] uppercase transition-colors ${
+                wished
+                  ? "border-[#c98b52] bg-[#f4e3d3] text-[#7f4d2a]"
+                  : "border-[#d9c7b5] bg-transparent text-[#3a312d] hover:bg-[#f3efe9]"
+              }`}
+            >
+              <Heart size={16} className={wished ? "fill-current" : ""} />
+              {wished ? "Saved" : "Favorite"}
+            </button>
+          </div>
+
+          <div className="space-y-3 text-[16px] text-[#1b1815]">
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Availability:</span>
+              <span className="text-right">{product.availability}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Net Weight:</span>
+              <span className="text-right">{product.netWeight}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Wastage:</span>
+              <span className="text-right">{product.wastage}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Size:</span>
+              <span className="text-right">{product.size || "—"}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Color:</span>
+              <span className="text-right">{product.color}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Category:</span>
+              <span className="text-right uppercase">{product.category}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Sub Category:</span>
+              <span className="text-right uppercase">{product.subCategory}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Expected Delivery Date:</span>
+              <span className="text-right">{product.expectedDelivery}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 py-1">
+              <span className="font-medium">Exchange Eligibility:</span>
+              <span className="text-right">{product.exchangeEligibility}</span>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <p className="text-[12px] uppercase tracking-[0.2em] text-[#7a6d60] mb-3">Description :</p>
+            <p className="text-[15px] text-[#3d352e] leading-relaxed">{product.description}</p>
+          </div>
+
+          <div className="mt-8">
+            <p className="text-[12px] uppercase tracking-[0.2em] text-[#7a6d60] mb-3">Comment :</p>
+            <div className="flex items-center border border-[#cbbcac] bg-transparent min-h-[72px] p-3">
+              <input
+                type="text"
+                placeholder="Write your comment here..."
+                className="w-full bg-transparent outline-none text-[15px] placeholder:text-[#7a6d60]"
+              />
+              <button className="ml-3 text-[#7a6d60] hover:text-[#1f1b18]" aria-label="Send comment">
+                <ArrowRight size={18} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Related pieces */}
-      {product.related.length > 0 && (
-        <div className="bg-secondary py-20 px-6 lg:px-12">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-end justify-between mb-10 border-b border-border pb-6">
-              <h2
-                className="text-3xl"
-                style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
-              >
-                You may also like
-              </h2>
-              <Link
-                to="/collections"
-                className="hidden md:flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground transition-colors"
-              >
-                View all <ArrowRight size={12} />
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
-              {product.related.map((p) => (
-                <Link to={`/collections/${p.id}`} key={p.id} className="group">
-                  <div className="overflow-hidden bg-muted aspect-[3/4] mb-4">
-                    <img
-                      src={p.image}
-                      alt={p.alt}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <h3
-                    className="text-lg mb-1"
-                    style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
-                  >
-                    {p.name}
-                  </h3>
-                  <p className="text-sm tracking-wider">{p.price}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

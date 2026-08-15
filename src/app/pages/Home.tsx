@@ -4,34 +4,64 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 
 const COLLECTIONS = [
   {
-    id: "01",
-    slug: "rings",
-    title: "Eternal Rings",
-    subtitle: "Solitaires & Bands",
+    id: "22KT Ready",
+    slug: "22kt-ready",
+    title: "22KT Ready",
+    subtitle: "Gold jewellery",
     image:
-      "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?w=800&h=1000&fit=crop&auto=format",
-    alt: "Three gold studded rings arranged elegantly",
-    count: "24 pieces",
+      "https://ik.imagekit.io/jcassets/others/cms/BombayLongNecklaceThumbnail22KTReadyStock.png?tr=c-at_max,q-40,f-webp",
+    alt: "Gold jewelry collection",
+    count: "120 pieces",
   },
   {
-    id: "02",
-    slug: "necklaces",
-    title: "Necklaces",
-    subtitle: "Pendants & Chains",
+    id: "18KT Ready",
+    slug: "18kt-ready",
+    title: "18KT Ready",
+    subtitle: "Fine craftsmanship",
     image:
-      "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&h=1000&fit=crop&auto=format",
-    alt: "Woman wearing a delicate silver necklace",
-    count: "18 pieces",
+      "https://ik.imagekit.io/jcassets/others/cms/Chain22KTReadyStock.png?tr=c-at_max,q-40,f-webp",
+    alt: "Gold necklace collection",
+    count: "90 pieces",
   },
   {
-    id: "03",
-    slug: "pearls",
-    title: "Pearl Series",
-    subtitle: "South Sea & Akoya",
+    id: "Chain",
+    slug: "chain",
+    title: "Chain",
+    subtitle: "Everyday wear",
     image:
-      "https://images.unsplash.com/photo-1595345705177-ffe090eb0784?w=800&h=1000&fit=crop&auto=format",
-    alt: "White pearl necklace on grey textile",
-    count: "12 pieces",
+      "https://ik.imagekit.io/jcassets/others/cms/CZCasting-22KTReadyStock.png?tr=c-at_max,q-40,f-webp",
+    alt: "Gold chain close up",
+    count: "64 pieces",
+  },
+  {
+    id: "Mangalsutra",
+    slug: "mangalsutra",
+    title: "Mangalsutra",
+    subtitle: "Traditional design",
+    image:
+      "https://ik.imagekit.io/jcassets/others/cms/Mangalsutra22KTReadyStock..png?tr=c-at_max,q-40,f-webp",
+    alt: "Mangalsutra jewelry in warm light",
+    count: "34 pieces",
+  },
+  {
+    id: "Bracelet",
+    slug: "bracelet",
+    title: "Bracelet",
+    subtitle: "Polished finish",
+    image:
+      "https://ik.imagekit.io/jcassets/others/cms/Bracelet-22KTReadyStock.png?tr=c-at_max,q-40,f-webp",
+    alt: "Gold bracelet collection",
+    count: "52 pieces",
+  },
+  {
+    id: "Silver Ready",
+    slug: "silver-ready",
+    title: "Silver Ready",
+    subtitle: "Modern styles",
+    image:
+      "https://ik.imagekit.io/jcassets/others/cms/Silver%20Stock%20Selection.jpg?tr=c-at_max,q-40,f-webp",
+    alt: "Silver jewelry collection",
+    count: "71 pieces",
   },
 ];
 
@@ -133,10 +163,10 @@ export function Home() {
               <ArrowRight size={14} />
             </Link>
             <Link
-              to="/craftsmanship"
+              to="/collections"
               className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground transition-colors border-b border-muted-foreground hover:border-foreground pb-0.5"
             >
-              Our Story
+              Explore now
             </Link>
           </div>
         </div>
@@ -159,28 +189,36 @@ export function Home() {
 
       {/* ── Collections ── */}
       <section className="py-28 px-6 lg:px-12 max-w-7xl mx-auto">
-        <div className="flex items-end justify-between mb-16 border-b border-border pb-6">
-          <h2
-            className="text-4xl lg:text-5xl"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontWeight: 400,
-            }}
-          >
-            Collections
-          </h2>
+        <div className="flex items-end justify-between mb-12 border-b border-border pb-6">
+          <div>
+            <p
+              className="text-[10px] tracking-[0.35em] uppercase text-accent mb-3"
+              style={{ fontFamily: "'DM Mono', monospace" }}
+            >
+              Shop by Category
+            </p>
+            <h2
+              className="text-4xl lg:text-5xl"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontWeight: 400,
+              }}
+            >
+              Discover collections
+            </h2>
+          </div>
           <Link
             to="/collections"
             className="hidden md:flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
-            All categories <ChevronRight size={12} />
+            View all collections <ChevronRight size={12} />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {COLLECTIONS.map((col) => (
             <Link
-              to={`/collections?cat=${col.slug}`}
+              to={`/collections?cat=${encodeURIComponent(col.slug)}`}
               key={col.id}
               className="group cursor-pointer"
             >
@@ -190,18 +228,16 @@ export function Home() {
                   alt={col.alt}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-500" />
-                <span
-                  className="absolute top-4 left-4 text-primary-foreground text-[10px] tracking-[0.3em]"
-                  style={{ fontFamily: "'DM Mono', monospace" }}
-                >
-                  {col.id}
-                </span>
-              </div>
-              <div className="mt-5 flex items-start justify-between">
-                <div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 text-primary-foreground">
+                  <p
+                    className="text-[9px] tracking-[0.25em] uppercase mb-2"
+                    style={{ fontFamily: "'DM Mono', monospace" }}
+                  >
+                    {col.id}
+                  </p>
                   <h3
-                    className="text-xl"
+                    className="text-2xl"
                     style={{
                       fontFamily: "'Playfair Display', serif",
                       fontWeight: 400,
@@ -209,12 +245,16 @@ export function Home() {
                   >
                     {col.title}
                   </h3>
+                </div>
+              </div>
+              <div className="mt-4 flex items-center justify-between gap-4">
+                <div>
                   <p className="text-xs tracking-[0.15em] uppercase text-muted-foreground mt-1 font-light">
                     {col.subtitle}
                   </p>
                 </div>
                 <span
-                  className="text-[10px] text-muted-foreground mt-1"
+                  className="text-[10px] text-muted-foreground"
                   style={{ fontFamily: "'DM Mono', monospace" }}
                 >
                   {col.count}
@@ -309,7 +349,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* ── Craftsmanship teaser ── */}
+      {/* ── Collection story teaser ── */}
       <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[70vh]">
         <div className="relative overflow-hidden bg-muted h-[60vw] lg:h-auto">
           <img
@@ -324,7 +364,7 @@ export function Home() {
             className="text-[10px] tracking-[0.4em] uppercase text-accent mb-8"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
-            § Craftsmanship
+            § Signature edit
           </p>
           <h2
             className="text-4xl xl:text-5xl leading-[1.1] mb-8"
@@ -333,23 +373,18 @@ export function Home() {
               fontWeight: 400,
             }}
           >
-            Centuries of
+            Fine pieces,
             <br />
-            <em>French technique.</em>
-            <br />
-            One atelier.
+            <em>curated for daily ritual.</em>
           </h2>
           <p className="text-sm leading-[1.85] text-muted-foreground font-light mb-10 max-w-sm">
-            Vêlore was founded in 1987 by master goldsmith Élise
-            Moreau in the heart of Le Marais. Every piece is
-            worked by hand using traditional setting techniques
-            passed through generations.
+            Discover statement silhouettes, heirloom-inspired forms, and softly sculpted details designed to feel personal from the first wear.
           </p>
           <Link
-            to="/craftsmanship"
+            to="/collections"
             className="inline-flex items-center gap-3 text-xs tracking-[0.2em] uppercase text-foreground border-b border-foreground pb-0.5 w-fit hover:text-accent hover:border-accent transition-colors duration-200"
           >
-            Read our heritage <ArrowRight size={12} />
+            Explore the collection <ArrowRight size={12} />
           </Link>
         </div>
       </section>

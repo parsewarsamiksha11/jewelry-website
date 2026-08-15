@@ -40,7 +40,7 @@ export function Contact() {
             className="text-[10px] tracking-[0.4em] uppercase text-accent mb-4"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
-            § Contact
+            Contact
           </p>
           <h1
             className="text-5xl lg:text-6xl"
@@ -69,30 +69,30 @@ export function Contact() {
                 <MapPin size={14} className="text-accent mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-sm font-light text-foreground leading-relaxed">
-                    12, Rue de Bretagne
+                    Tanish Orchid Phase 2,
                     <br />
-                    Paris, 75003
+                    Charoli (B.K)
                     <br />
-                    France
+                    Pune 412105
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={14} className="text-accent flex-shrink-0" />
                 <a
-                  href="tel:+33142765000"
+                  href="tel:9112631008"
                   className="text-sm font-light text-foreground hover:text-accent transition-colors"
                 >
-                  +33 1 42 76 50 00
+                  9112631008
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail size={14} className="text-accent flex-shrink-0" />
                 <a
-                  href="mailto:hello@velore.fr"
+                  href="mailto:aniketgat031299@gmail.com"
                   className="text-sm font-light text-foreground hover:text-accent transition-colors"
                 >
-                  hello@velore.fr
+                  aniketgat031299@gmail.com
                 </a>
               </div>
             </div>
@@ -126,7 +126,7 @@ export function Contact() {
           <div className="overflow-hidden bg-muted aspect-[4/3] relative">
             <img
               src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=450&fit=crop&auto=format"
-              alt="Vêlore atelier in Paris"
+              alt="Tanish Orchid showroom in Pune"
               className="w-full h-full object-cover opacity-70"
             />
             <div className="absolute inset-0 flex items-center justify-center">
@@ -135,7 +135,7 @@ export function Contact() {
                   className="text-[9px] tracking-[0.3em] uppercase text-foreground"
                   style={{ fontFamily: "'DM Mono', monospace" }}
                 >
-                  Le Marais, Paris
+                  Pune, Maharashtra
                 </p>
               </div>
             </div>
@@ -179,7 +179,7 @@ export function Contact() {
                     required
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="Margaux Dubois"
+                    placeholder="Aniket Gat"
                     className="bg-transparent border-b border-border pb-2 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none font-light focus:border-foreground transition-colors"
                   />
                 </div>
@@ -196,7 +196,7 @@ export function Contact() {
                     required
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="margaux@example.com"
+                    placeholder="aniketgat031299@gmail.com"
                     className="bg-transparent border-b border-border pb-2 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none font-light focus:border-foreground transition-colors"
                   />
                 </div>
@@ -215,7 +215,7 @@ export function Contact() {
                     name="phone"
                     value={form.phone}
                     onChange={handleChange}
-                    placeholder="+33 6 00 00 00 00"
+                    placeholder="+91 91234 56789"
                     className="bg-transparent border-b border-border pb-2 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none font-light focus:border-foreground transition-colors"
                   />
                 </div>
@@ -295,7 +295,7 @@ export function Contact() {
             >
               Visit us
               <br />
-              <em>in the Marais.</em>
+              <em>in Pune.</em>
             </h2>
           </div>
           <p className="text-sm text-muted-foreground font-light leading-[1.85]">

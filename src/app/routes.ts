@@ -3,8 +3,9 @@ import { Root } from "./Root";
 import { Home } from "./pages/Home";
 import { Collections } from "./pages/Collections";
 import { ProductDetail } from "./pages/ProductDetail";
-import { Craftsmanship } from "./pages/Craftsmanship";
 import { Contact } from "./pages/Contact";
+import { Wishlist } from "./pages/Wishlist";
+import { Cart } from "./pages/Cart";
 import { NotFound } from "./pages/NotFound";
 
 export const router = createBrowserRouter([
@@ -15,7 +16,8 @@ export const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: "collections", Component: Collections },
       { path: "collections/:id", Component: ProductDetail },
-      { path: "craftsmanship", Component: Craftsmanship },
+      { path: "wishlist", Component: Wishlist },
+      { path: "cart", Component: Cart },
       { path: "contact", Component: Contact },
       { path: "*", Component: NotFound },
     ],
